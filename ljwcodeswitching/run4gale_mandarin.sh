@@ -5,7 +5,7 @@
 
 echo "run begins"
 
-step=0;
+step=$0;
 
 case $step in
   0 )
@@ -14,6 +14,7 @@ case $step in
     ;;
 
   1 )
+. ./path.sh
 . ./cmd.sh
 
 num_jobs=64
@@ -224,6 +225,10 @@ echo training succedded
 exit 0
 
     echo "step $step ends.";
+    ;;
+    
+    default )
+    echo "It looks like you didn't provide the step for $0"
     ;;
 
 esac
