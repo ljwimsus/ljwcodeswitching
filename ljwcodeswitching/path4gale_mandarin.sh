@@ -1,5 +1,5 @@
 #/**
-# * create in eclipse which will link to gale_mandarin
+# * create in eclipse which will link to gale_mandarin/path.sh
 # */
  
 echo "begin of path.sh"
