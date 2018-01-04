@@ -1,6 +1,8 @@
 /**
  * create in eclipse which will link to gale_mandarin
  */
+ 
+ echo "begin of path.sh"
 
 export KALDI_ROOT=~/kaldi/kaldi
 export PATH=$PWD/utils/:$KALDI_ROOT/tools/openfst/bin:$KALDI_ROOT/tools/kaldi_lm:$PWD:$PATH
