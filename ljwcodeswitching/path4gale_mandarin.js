@@ -13,3 +13,5 @@ export PATH=$PWD/utils/:$KALDI_ROOT/tools/openfst/bin:$KALDI_ROOT/tools/kaldi_lm
 export LC_ALL=C
 
 echo "end of path.sh"
+
+echo "actually run from path4gale_mandarin.js
