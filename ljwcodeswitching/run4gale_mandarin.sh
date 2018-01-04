@@ -227,7 +227,7 @@ exit 0
     echo "step $step ends.";
     ;;
     
-    default )
+    * )
     echo "It looks like you didn't provide the step for $0"
     ;;
 
