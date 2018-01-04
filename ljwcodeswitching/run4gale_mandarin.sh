@@ -45,14 +45,24 @@ galeData=GALE/
 set -e -o pipefail
 set -x
 
+	echo "step $step ends.";
+	;;
+	
+  1.1)
+
 local/gale_data_prep_audio.sh "${AUDIO[@]}" $galeData
+
+	echo "step $step ends.";
+	;;
+	
+  1.2)
 
 local/gale_data_prep_txt.sh  "${TEXT[@]}" $galeData
 
 	echo "step $step ends.";
 	;;
 	
-  1.2)
+  1.3)
 
 local/gale_data_prep_split.sh $galeData
 local/gale_prep_dict.sh
