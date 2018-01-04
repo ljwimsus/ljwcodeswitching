@@ -46,13 +46,13 @@ set -e -o pipefail
 set -x
 
 	echo "step $step ends.";
-	;;
+#	;;
 	
-  1.1)
+#  1.1)
 
 local/gale_data_prep_audio.sh "${AUDIO[@]}" $galeData
 
-	echo "step $step ends.";
+	echo "step 1.1 ends.";
 	;;
 	
   1.2)
