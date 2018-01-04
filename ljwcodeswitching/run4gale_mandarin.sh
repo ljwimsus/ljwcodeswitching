@@ -9,13 +9,11 @@ step=0;
 
 case $step in
   0 )
+. ./path.sh
     echo "step $step ends.";
     ;;
 
   1 )
-
-
-. ./path.sh
 . ./cmd.sh
 
 num_jobs=64
