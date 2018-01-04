@@ -65,6 +65,12 @@ local/gale_data_prep_txt.sh  "${TEXT[@]}" $galeData
   1.3)
 
 local/gale_data_prep_split.sh $galeData
+
+	echo "step $step ends.";
+	;;
+	
+  1.4)
+  
 local/gale_prep_dict.sh
 
 
