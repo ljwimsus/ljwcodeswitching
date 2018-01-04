@@ -1,6 +1,12 @@
 #/**
 # * create in eclipse which will link to gale_mandarin/path.sh
 # */
+
+#./path.sh: line 1: /Applications: is a directory
+#./path.sh: line 2: RESULTS: command not found
+#./path.sh: line 3: conf/: is a directory
+
+# the above is the console error msg for unfix .js /* */ comments
  
 echo "begin of path.sh"
 
