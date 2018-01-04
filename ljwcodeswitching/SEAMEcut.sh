@@ -1,4 +1,4 @@
-filename=NI01MAX_0101; 
+filename=$1; echo filename $1; # format: path/NI01MAX_0101
 
 scriptname=$0; echo scriptname $0;
 
@@ -31,7 +31,7 @@ starttimeposition=${starttimesec}.${starttimemillisec}; echo starttimeposition $
 endtimeposition=${endtimesec}.${endtimemillisec}; echo endtimeposition ${endtimeposition};
  
 
-: ' echo "ffmpeg -i ${filename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${filename}.${starttimeposition}-${endtimeposition}.wav; " >> ffmpeg.sh; ';
+: ' echo "ffmpeg -i ${filename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${filename}.${starttimeposition}-${endtimeposition}.wav; " >> ${scriptname}-ffmpeg.sh; ';
 echo "ffmpeg -i ${filename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${filename}.${linenum}.wav; " >> ${scriptname}-ffmpeg.sh;
 
 
