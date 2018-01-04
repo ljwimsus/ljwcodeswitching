@@ -5,7 +5,7 @@
 
 echo "run begins"
 
-step=$0;
+step=$1;
 
 case $step in
   0 )
