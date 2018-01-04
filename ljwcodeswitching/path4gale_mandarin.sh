@@ -14,4 +14,4 @@ export LC_ALL=C
 
 echo "end of path.sh"
 
-echo "actually run from path4gale_mandarin.js
+echo "actually run from path4gale_mandarin.js"
