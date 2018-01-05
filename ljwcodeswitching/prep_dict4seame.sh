@@ -16,7 +16,7 @@ dev_dir=data/local/dev
 dict_dir=data/local/dict
 mkdir -p $dict_dir
 
-echo $1;
+echo "S1 $1";
 
 case prep_dict_step in    #prepare dict steps
 	
