@@ -77,7 +77,8 @@ set -x
 #  1.4)
   
 #local/gale_prep_dict.sh
-local/seame_prep_dict.sh
+#local/seame_prep_dict.sh
+local/seame_prep_dict.sh 0
 
     echo "  step 1.4 ends.";
     ;;
@@ -260,3 +261,4 @@ exit 0
 esac
 
 echo "run4seame.sh ends (actually run from $0)."
+echo "";
