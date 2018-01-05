@@ -6,7 +6,7 @@
 echo "";
 echo "";
 
-echo "run4seame.sh begins (actually run from $0) on: " & date;
+echo "run4seame.sh begins (actually run by $0) on: " & date;
 
 step=$1;
 
@@ -261,5 +261,5 @@ exit 0
 
 esac
 
-echo "run4seame.sh ends (actually run from $0) on: " & date;
+echo "run4seame.sh ends (actually run by $0) on: " & date;
 echo "";
