@@ -25,14 +25,16 @@ case $prep_dict_step in    #prepare dict steps
 
 	;;
 	1) echo "  prep_dict_step $prep_dict_step extract and split dict text.";
-
+	;;
+	1.1)
 # extract full vocabulary
 cat $train_dir/text $dev_dir/text | awk '{for (i = 2; i <= NF; i++) print $i}' |\
   perl -ape 's/ /\n/g;' | sort -u | \
   grep -v '\[LAUGHTER\]' | \
   grep -v '\[NOISE\]' |\
   grep -v '\[VOCALIZED-NOISE\]' > $dict_dir/vocab-full.txt
-
+	;;
+	1.2)
 # split into English and Chinese
 cat $dict_dir/vocab-full.txt | grep '[a-zA-Z]' > $dict_dir/vocab-en.txt
 cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
