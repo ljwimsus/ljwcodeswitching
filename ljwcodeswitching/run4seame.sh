@@ -3,7 +3,7 @@
 # Copyright 2014 (author: Hainan Xu, Ahmed Ali)
 # Apache 2.0
 
-echo "run begins"
+echo "run.sh begins"
 
 step=$1;
 
@@ -249,7 +249,9 @@ exit 0
     ;;
     
     * )
-    echo "It looks like you didn't provide the step for $0"
+    echo "It looks like you didn't provide the step for run.sh"
     ;;
 
 esac
+
+echo "run.sh ends (actually run from $0)."
