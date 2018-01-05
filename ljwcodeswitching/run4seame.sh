@@ -77,7 +77,7 @@ set -x
 #  1.4)
   
 #local/gale_prep_dict.sh
-local/seame_pre_dict.sh
+local/seame_prep_dict.sh
 
     echo "  step 1.4 ends.";
     ;;
