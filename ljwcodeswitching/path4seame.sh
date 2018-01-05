@@ -1,4 +1,5 @@
-echo "\nbegin of path4seame.sh (actually calls from $0)"
+echo ""
+echo "begin of path4seame.sh (actually calls from $0)"
 
 export SEAME_ROOT=~/SEAME
 export KALDI_ROOT=~/kaldi/kaldi
@@ -15,4 +16,5 @@ echo "    end of env.sh"
 
 export LC_ALL=C
 
-echo "end of path4seame.sh (actually called from $0).\n"
+echo "end of path4seame.sh (actually called from $0)."
+echo ""
