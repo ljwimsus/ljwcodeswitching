@@ -345,4 +345,4 @@ echo "$0: Done"
 	*) echo "  It seems you didn't provide the prep_dict_step.";
 esac
 
-echo "    pre_dict4seame.sh ends.";
+echo "    pre_dict4seame.sh ends(actually call by $0).";
