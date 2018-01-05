@@ -15,4 +15,4 @@ echo "end of env.sh"
 
 export LC_ALL=C
 
-echo "end of path.sh (actually run from $0)"
+echo "end of path4seame.sh (actually run from $0)"
