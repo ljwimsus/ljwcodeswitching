@@ -3,7 +3,7 @@
 # Copyright 2014 (author: Hainan Xu, Ahmed Ali)
 # Apache 2.0
 
-echo "run.sh begins"
+echo "run4seame.sh begins. (actually run from $0)"
 
 step=$1;
 

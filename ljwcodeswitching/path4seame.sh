@@ -1,4 +1,4 @@
-echo "begin of path.sh"
+echo "begin of path4seame.sh (actually run from $0)"
 
 export SEAME_ROOT=~/SEAME
 export KALDI_ROOT=~/kaldi/kaldi
