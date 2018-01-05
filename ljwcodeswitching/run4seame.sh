@@ -7,6 +7,7 @@ echo "";
 echo "";
 
 echo "run4seame.sh begins (actually runs by $0) on: " & date;
+echo ""
 
 step=$1;
 
