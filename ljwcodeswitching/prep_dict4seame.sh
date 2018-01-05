@@ -63,14 +63,17 @@ if [ -f $dict_dir/cmudict/scripts/make_baseform.pl ] ; then
 echo "cmudict is fine.";
   exit
 fi
-	;;
-	2.2)
+#	;;
+#	2.2)
 
+#	;;
+#	2.2.1)
 echo "--- Striping stress and pronunciation variant markers from cmudict ..."
 perl $dict_dir/cmudict/scripts/make_baseform.pl \
   $dict_dir/cmudict/cmudict.0.7a /dev/stdout |\
   sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' > $dict_dir/cmudict-plain.txt
-
+	;;
+	2.2.2)
 echo "--- Searching for English OOV words ..."
 gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
   $dict_dir/cmudict-plain.txt $dict_dir/vocab-en.txt |\
