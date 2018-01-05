@@ -21,6 +21,7 @@ mkdir -p $dict_dir
 
 echo "    prep_dict_step $1";
 prep_dict_step=$1;
+echo ""
 
 case $prep_dict_step in    #prepare dict steps
 	
