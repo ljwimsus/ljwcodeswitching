@@ -1,5 +1,6 @@
 echo "begin of path.sh"
 
+export SEAME_ROOT=~/SEAME
 export KALDI_ROOT=~/kaldi/kaldi
 export PATH=$PWD/utils/:$KALDI_ROOT/tools/openfst/bin:$KALDI_ROOT/tools/kaldi_lm:$PWD:$PATH
 [ ! -f $KALDI_ROOT/tools/config/common_path.sh ] && echo >&2 "The standard file $KALDI_ROOT/tools/config/common_path.sh is not present -> Exit!" && exit 1
