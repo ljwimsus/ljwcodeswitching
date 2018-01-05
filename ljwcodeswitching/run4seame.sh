@@ -255,4 +255,4 @@ exit 0
 
 esac
 
-echo "run.sh ends (actually run from $0)."
+echo "run4seame.sh ends (actually run from $0)."
