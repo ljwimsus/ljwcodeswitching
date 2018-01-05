@@ -16,11 +16,14 @@ dev_dir=data/local/dev
 dict_dir=data/local/dict
 mkdir -p $dict_dir
 
-case 0 in    #goto here
-    1)
-;;           #here:
-esac
+echo $1;
 
+case pre_dict_step in    #prepare dict steps
+	
+    0) echo "";
+
+	;;
+	1) echo "  extract and split dict text.";
 
 # extract full vocabulary
 cat $train_dir/text $dev_dir/text | awk '{for (i = 2; i <= NF; i++) print $i}' |\
@@ -36,7 +39,9 @@ cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
 cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
   perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-weird.txt
 
-
+	;;
+	2) echo "  prepare dict for english.";
+	
 # produce pronunciations for english
 if [ ! -f $dict_dir/cmudict/cmudict.0.7a ]; then
   echo "--- Downloading CMU dictionary ..."
@@ -88,6 +93,8 @@ cat $dict_dir/lexicon-en-oov.txt $dict_dir/lexicon-en-iv.txt |\
   sort > $dict_dir/lexicon-en-phn.txt
 
 
+	;;
+	3) echo "  prepare dict for chinese";
 
 
 # produce pronunciations for chinese
@@ -300,3 +307,6 @@ cat $dict_dir/nonsilence_phones.txt | perl -e 'while(<>){ foreach $p (split(" ",
 export LC_ALL=C
 echo "$0: Done"
 
+	;;
+	*) echo "  It seems you didn't provide the pre_dict_step.";
+esac
