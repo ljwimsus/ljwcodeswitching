@@ -9,7 +9,7 @@
 . ./path.sh
 
 set -e -o pipefail
-[ $# != 0 ] && echo "Usage: local/hkust_prepare_dict.sh" && exit 1;
+#[ $# != 0 ] && echo "Usage: local/hkust_prepare_dict.sh" && exit 1;
 
 train_dir=data/local/train
 dev_dir=data/local/dev
