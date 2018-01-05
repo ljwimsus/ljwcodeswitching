@@ -18,12 +18,12 @@ mkdir -p $dict_dir
 
 echo $1;
 
-case pre_dict_step in    #prepare dict steps
+case prep_dict_step in    #prepare dict steps
 	
-    0) echo "";
+    0) echo "  prep_dict_step $prep_dict_step do nothing";
 
 	;;
-	1) echo "  extract and split dict text.";
+	1) echo "  prep_dict_step $prep_dict_step extract and split dict text.";
 
 # extract full vocabulary
 cat $train_dir/text $dev_dir/text | awk '{for (i = 2; i <= NF; i++) print $i}' |\
@@ -40,7 +40,7 @@ cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
   perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-weird.txt
 
 	;;
-	2) echo "  prepare dict for english.";
+	2) echo "  prep_dict_step $prep_dict_step prepare dict for english.";
 	
 # produce pronunciations for english
 if [ ! -f $dict_dir/cmudict/cmudict.0.7a ]; then
@@ -94,7 +94,7 @@ cat $dict_dir/lexicon-en-oov.txt $dict_dir/lexicon-en-iv.txt |\
 
 
 	;;
-	3) echo "  prepare dict for chinese";
+	3) echo "  prep_dict_step $prep_dict_step prepare dict for chinese";
 
 
 # produce pronunciations for chinese
@@ -308,5 +308,5 @@ export LC_ALL=C
 echo "$0: Done"
 
 	;;
-	*) echo "  It seems you didn't provide the pre_dict_step.";
+	*) echo "  It seems you didn't provide the prep_dict_step.";
 esac
