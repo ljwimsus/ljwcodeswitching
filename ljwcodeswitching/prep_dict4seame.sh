@@ -6,7 +6,7 @@
 # phone set at the end. For Chinese, we use an online dictionary,
 # for OOV, we just produce pronunciation using Charactrt Mapping.
 
-echo "    pre_dict4seame.sh begins (actually run by $0).";
+echo "    prep_dict4seame.sh begins (actually run by $0).";
 
 . ./path.sh
 
@@ -347,4 +347,4 @@ echo "$0: Done"
 	*) echo "  It seems you didn't provide the prep_dict_step.";
 esac
 
-echo "    pre_dict4seame.sh ends (actually run by $0).";
+echo "    prep_dict4seame.sh ends (actually run by $0).";
