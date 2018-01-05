@@ -43,6 +43,9 @@ cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
 	;;
 	2) echo "  prep_dict_step $prep_dict_step prepare dict for english.";
 	
+#	;;
+#	2.1)
+	
 # produce pronunciations for english
 if [ ! -f $dict_dir/cmudict/cmudict.0.7a ]; then
   echo "--- Downloading CMU dictionary ..."
@@ -54,6 +57,14 @@ if [ ! -f $dict_dir/cmudict/scripts/make_baseform.pl ] ; then
   echo "$0: $dict_dir/cmudict/scripts/make_baseform.pl does not exist!";
   exit
 fi
+
+if [ -f $dict_dir/cmudict/scripts/make_baseform.pl ] ; then
+  echo "$0: $dict_dir/cmudict/scripts/make_baseform.pl exist!";
+echo "cmudict is fine.";
+  exit
+fi
+	;;
+	2.2)
 
 echo "--- Striping stress and pronunciation variant markers from cmudict ..."
 perl $dict_dir/cmudict/scripts/make_baseform.pl \
@@ -82,6 +93,8 @@ if [ ! -f conf/g2p_model ]; then
   fi
 fi
 
+	;;
+	2.3)
 echo "--- Preparing pronunciations for OOV words ..."
 g2p=`which g2p.py`
 if [ ! -x $g2p ]; then
@@ -311,3 +324,5 @@ echo "$0: Done"
 	;;
 	*) echo "  It seems you didn't provide the prep_dict_step.";
 esac
+
+echo "    pre_dict4seame.sh ends.";
