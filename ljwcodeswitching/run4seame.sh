@@ -8,12 +8,12 @@ echo "run4seame.sh begins. (actually run from $0)"
 step=$1;
 
 case $step in
-  0 ) echo "step $step begins:";
+  0 )echo "  step $step begins:";
 . ./path.sh
-    echo "step $step ends.";
+    echo "  step $step ends.";
     ;;
 
-  1 ) echo "step $step begins:";
+  1 ) echo "  step $step begins:";
   
 . ./path.sh
 . ./cmd.sh
@@ -38,6 +38,7 @@ TEXT=(
   /export/corpora/LDC/LDC2016T12/
 )
 galeData=GALE/
+seameData=SEAME/
 
 # You can run the script from here automatically, but it is recommended to run the data preparation,
 # and features extraction manually and and only once.
@@ -46,28 +47,28 @@ galeData=GALE/
 set -e -o pipefail
 set -x
 
-	echo "step $step ends.";
+	echo "  step $step ends.";
 #	;;
 	
 #  1.1)
 
 #local/gale_data_prep_audio.sh "${AUDIO[@]}" $galeData
 
-	echo "step 1.1 ends.";
+	echo "  step 1.1 ends.";
 #	;;
 	
 #  1.2)
 
 #local/gale_data_prep_txt.sh  "${TEXT[@]}" $galeData
 
-	echo "step 1.2 ends.";
+	echo "  step 1.2 ends.";
 #	;;
 	
 #  1.3)
 
 #local/gale_data_prep_split.sh $galeData
 
-	echo "step 1.3 ends.";
+	echo "  step 1.3 ends.";
 #	;;
 	
 #  1.4)
@@ -75,10 +76,10 @@ set -x
 #local/gale_prep_dict.sh
 
 
-    echo "step 1.4 ends.";
+    echo "  step 1.4 ends.";
     ;;
 
-  2 )
+  2 ) echo "  step $step begins:";
 
 
 utils/prepare_lang.sh data/local/dict "<UNK>" data/local/lang data/lang
@@ -246,11 +247,11 @@ echo training succedded
 
 exit 0
 
-    echo "step $step ends.";
+    echo "  step $step ends.";
     ;;
     
     * )
-    echo "It looks like you didn't provide the step for run.sh"
+    echo "  It looks like you didn't provide the step for run.sh"
     ;;
 
 esac
