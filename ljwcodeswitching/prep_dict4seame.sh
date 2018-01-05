@@ -45,7 +45,7 @@ cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
 	
 #	;;
 #	2.1)
-	
+	echo "prep_dict 2.1":
 # produce pronunciations for english
 if [ ! -f $dict_dir/cmudict/cmudict.0.7a ]; then
   echo "--- Downloading CMU dictionary ..."
@@ -61,11 +61,11 @@ fi
 if [ -f $dict_dir/cmudict/scripts/make_baseform.pl ] ; then
   echo "$0: $dict_dir/cmudict/scripts/make_baseform.pl exist!";
 echo "cmudict is fine.";
-  exit
+echo "";
+#  exit
 fi
 #	;;
-#	2.2)
-
+#	2.2) echo "prep_dict 2.2";
 #	;;
 #	2.2.1)
 echo "--- Striping stress and pronunciation variant markers from cmudict ..."
