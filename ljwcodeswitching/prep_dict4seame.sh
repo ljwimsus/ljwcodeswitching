@@ -25,6 +25,7 @@ case $prep_dict_step in    #prepare dict steps
 
 	;;
 	1) echo "  prep_dict_step $prep_dict_step extract and split dict text.";
+		echo "  Please seperately call prep_dict_step 1.1 and 1.2";
 	;;
 	1.1)
 # extract full vocabulary
@@ -34,14 +35,25 @@ cat $train_dir/text $dev_dir/text | awk '{for (i = 2; i <= NF; i++) print $i}' |
   grep -v '\[NOISE\]' |\
   grep -v '\[VOCALIZED-NOISE\]' > $dict_dir/vocab-full.txt
 	;;
-	1.2)
+	1.2) echo "  split into English and Chinese.";
 # split into English and Chinese
-cat $dict_dir/vocab-full.txt | grep '[a-zA-Z]' > $dict_dir/vocab-en.txt
+#	;;
+#	1.2.1)
+echo "  generate vocab-en.txt from vocab-full.txt";
+#cat $dict_dir/vocab-full.txt | grep '[a-zA-Z]' > $dict_dir/vocab-en.txt ;
+cat $dict_dir/vocab-full.txt | grep '^[a-zA-Z]' > $dict_dir/vocab-en.txt ;
+#	;;
+#	1.2.2)
+echo "  generate vocab-ch.txt from vocab-full.txt";
 cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
-  perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-ch.txt
+  perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-ch.txt ;
+	;;
+	1.2.3)
 cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
-  perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-weird.txt
-
+  perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-weird.txt ;
+	;;
+	1.2.4)
+	echo "  split into English and Chinese done!";
 	;;
 	2) echo "  prep_dict_step $prep_dict_step prepare dict for english.";
 	
