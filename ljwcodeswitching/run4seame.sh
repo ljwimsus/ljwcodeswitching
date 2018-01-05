@@ -58,21 +58,21 @@ set -x
 
 #local/gale_data_prep_audio.sh "${AUDIO[@]}" $galeData
 
-	echo "  step 1.1 ends.";
+	echo "  step 1.1 skips.";
 #	;;
 	
 #  1.2)
 
 #local/gale_data_prep_txt.sh  "${TEXT[@]}" $galeData
 
-	echo "  step 1.2 ends.";
+	echo "  step 1.2 skips.";
 #	;;
 	
 #  1.3)
 
 #local/gale_data_prep_split.sh $galeData
 
-	echo "  step 1.3 ends.";
+	echo "  step 1.3 skips.";
 #	;;
 	
 #  1.4)
@@ -82,10 +82,10 @@ set -x
 #local/seame_prep_dict.sh 0
 local/seame_prep_dict.sh 1.2
 
-    echo "  step 1.4 ends.";
+    echo "  step 1.4 ends."; echo "";
     ;;
 
-  2 ) echo "  step $step begins:";
+  2 ) echo ""; echo "  step $step begins:";
 
 
 utils/prepare_lang.sh data/local/dict "<UNK>" data/local/lang data/lang
@@ -253,7 +253,7 @@ echo training succedded
 
 exit 0
 
-    echo "  step $step ends.";
+    echo "  step $step ends."; echo "";
     ;;
     
     * )
