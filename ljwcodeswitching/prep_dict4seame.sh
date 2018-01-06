@@ -51,8 +51,10 @@ cat $dict_dir/vocab-full.txt | grep '^[a-zA-Z]' > $dict_dir/vocab-en.txt ;
 echo "  generate vocab-ch.txt from vocab-full.txt";
 #cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
 #  perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-ch.txt ;
+#cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
+#  perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-ch.txt ;
 cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
-  perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-ch.txt ;
+  perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+/;}' > $dict_dir/vocab-ch.txt ;
 
 	;;
 	1.2.3)
