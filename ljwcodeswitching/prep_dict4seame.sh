@@ -64,7 +64,7 @@ cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
   perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+/;}' > $dict_dir/vocab-weird.txt ;
 #		;;
 #	1.2.4)
-	echo "  split into English and Chinese done!";
+	echo "  split into English and Chinese done!"; echo "";
 	;;
 	2) echo "  prep_dict_step $prep_dict_step prepare dict for english.";
 	
