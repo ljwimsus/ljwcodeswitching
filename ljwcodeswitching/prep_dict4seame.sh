@@ -373,4 +373,5 @@ esac
 
 echo "    prep_dict4seame.sh ends (actually run by $0).";
 echo "";
-echo "prep_dict_step $1 ended with prep_dict_stage $prep_dict_stage";
+echo "    prep_dict_step $1 ended with prep_dict_stage $prep_dict_stage";
+echo "";
