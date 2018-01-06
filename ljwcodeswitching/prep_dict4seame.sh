@@ -82,7 +82,7 @@ cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
 	prep_dict_stage=2;
 #	;;
 #	2.1)
-	echo "prep_dict 2.1":
+	echo "  prep_dict 2.1":
 # produce pronunciations for english
 if [ ! -f $dict_dir/cmudict/cmudict.0.7a ]; then
   echo "--- Downloading CMU dictionary ..."
@@ -96,8 +96,8 @@ if [ ! -f $dict_dir/cmudict/scripts/make_baseform.pl ] ; then
 fi
 
 if [ -f $dict_dir/cmudict/scripts/make_baseform.pl ] ; then
-  echo "$0: $dict_dir/cmudict/scripts/make_baseform.pl exist!";
-echo "cmudict is fine.";
+  echo "    $0: $dict_dir/cmudict/scripts/make_baseform.pl exist!";
+echo "    cmudict is fine.";
 echo "";
   #exit
 fi
@@ -105,7 +105,7 @@ fi
 	prep_dict_stage=2.1;
 #	;;
 #	2.2) 
-	echo "prep_dict 2.2";
+	echo "  prep_dict 2.2";
 	prep_dict_stage=2.2;
 #	;;
 #	2.2.1)
