@@ -127,8 +127,8 @@ gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
 #	2.2.3)	
 echo "--- Searching for English IV words ..."
 gawk 'NR==FNR{words[$1]; next;} ($1 in words)' \
-  $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt |\
-  egrep -v '<.?s>' > $dict_dir/lexicon-en-iv.txt
+  $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt #|\
+#  egrep -v '<.?s>' > $dict_dir/lexicon-en-iv.txt
 
 	prep_dict_stage=2.2.3;
 	;;
@@ -380,6 +380,7 @@ echo "$0: Done"
 	*) echo "  It seems you didn't provide the prep_dict_step.";
 esac
 
+echo "";
 echo "    prep_dict4seame.sh ends (actually run by $0).";
 echo "";
 echo "    prep_dict_step $1 ended with prep_dict_stage $prep_dict_stage";
