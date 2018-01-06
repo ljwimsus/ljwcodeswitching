@@ -58,6 +58,7 @@ cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
   perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+/;}' > $dict_dir/vocab-ch.txt ;
 #	;;
 #	1.2.3)
+echo "  generate vocab-weird.txt";
 #cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
 #  perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-weird.txt ;
 cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
