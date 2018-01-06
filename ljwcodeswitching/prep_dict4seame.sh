@@ -31,7 +31,7 @@ case $prep_dict_step in    #prepare dict steps
 	1) echo "  prep_dict_step $prep_dict_step extract and split dict text.";
 		echo "  Please seperately call prep_dict_step 1.1 and 1.2";
 	;;
-	1.1)
+	1.1) # SEAME eng+man_dict don't have these things
 # extract full vocabulary
 cat $train_dir/text $dev_dir/text | awk '{for (i = 2; i <= NF; i++) print $i}' |\
   perl -ape 's/ /\n/g;' | sort -u | \
@@ -39,7 +39,8 @@ cat $train_dir/text $dev_dir/text | awk '{for (i = 2; i <= NF; i++) print $i}' |
   grep -v '\[NOISE\]' |\
   grep -v '\[VOCALIZED-NOISE\]' > $dict_dir/vocab-full.txt
 	;;
-	1.2) echo "  split into English and Chinese.";
+	1.2) 
+	echo "  split into English and Chinese.";
 # split into English and Chinese
 #	;;
 #	1.2.1)
