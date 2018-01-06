@@ -67,7 +67,7 @@ cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
 #	1.2.4)
 	echo "  split into English and Chinese done!"; echo "";
 	;;
-	2) echo "  prep_dict_step $prep_dict_step prepare dict for english.";
+	2) echo ""; echo "  prep_dict_step $prep_dict_step prepare dict for english."; echo "";
 	
 #	;;
 #	2.1)
@@ -91,13 +91,14 @@ echo "";
 #  exit
 fi
 #	;;
-#	2.2) echo "prep_dict 2.2";
+#	2.2) 
+	echo "prep_dict 2.2";
 #	;;
 #	2.2.1)
 echo "--- Striping stress and pronunciation variant markers from cmudict ..."
 perl $dict_dir/cmudict/scripts/make_baseform.pl \
   $dict_dir/cmudict/cmudict.0.7a /dev/stdout |\
-  sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' > $dict_dir/cmudict-plain.txt
+  sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' > $dict_dir/cmudict-plain.txt ;
 	;;
 	2.2.2)
 echo "--- Searching for English OOV words ..."
