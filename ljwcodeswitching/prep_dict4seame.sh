@@ -55,12 +55,13 @@ echo "  generate vocab-ch.txt from vocab-full.txt";
 #  perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-ch.txt ;
 cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
   perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+/;}' > $dict_dir/vocab-ch.txt ;
-
-	;;
-	1.2.3)
-cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
-  perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-weird.txt ;
-	;;
+#	;;
+#	1.2.3)
+#cat $dict_dir/vocab-full.txt | grep -v '[a-zA-Z]' | \
+#  perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-weird.txt ;
+cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
+  perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+/;}' > $dict_dir/vocab-weird.txt ;
+		;;
 	1.2.4)
 	echo "  split into English and Chinese done!";
 	;;
