@@ -81,7 +81,8 @@ set -x
 #local/seame_prep_dict.sh
 #local/seame_prep_dict.sh 0
 #local/seame_prep_dict.sh 1.2
-local/seame_prep_dict.sh 2
+local/seame_prep_dict.sh 2;
+
 
     echo "  step 1.4 ends."; echo "";
     ;;

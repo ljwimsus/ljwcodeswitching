@@ -19,7 +19,7 @@ dev_dir=data/local/dev
 dict_dir=data/local/dict
 mkdir -p $dict_dir
 
-echo "    prep_dict_step $1";
+echo "    prep_dict4seame.sh call by prep_dict_step $1";
 prep_dict_step=$1;
 echo ""
 
@@ -38,15 +38,22 @@ cat $train_dir/text $dev_dir/text | awk '{for (i = 2; i <= NF; i++) print $i}' |
   grep -v '\[LAUGHTER\]' | \
   grep -v '\[NOISE\]' |\
   grep -v '\[VOCALIZED-NOISE\]' > $dict_dir/vocab-full.txt
+  
+	prep_dict_stage=1.1;
 	;;
 	1.2) 
 	echo "  split into English and Chinese.";
+
 # split into English and Chinese
+
+	prep_dict_stage=1.2;
 #	;;
 #	1.2.1)
 echo "  generate vocab-en.txt from vocab-full.txt";
 #cat $dict_dir/vocab-full.txt | grep '[a-zA-Z]' > $dict_dir/vocab-en.txt ;
 cat $dict_dir/vocab-full.txt | grep '^[a-zA-Z]' > $dict_dir/vocab-en.txt ;
+
+	prep_dict_stage=1.2.1;
 #	;;
 #	1.2.2)
 echo "  generate vocab-ch.txt from vocab-full.txt";
@@ -56,6 +63,8 @@ echo "  generate vocab-ch.txt from vocab-full.txt";
 #  perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-ch.txt ;
 cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
   perl -CSD -Mutf8 -ane '{print if /^\p{InCJK_Unified_Ideographs}+/;}' > $dict_dir/vocab-ch.txt ;
+
+	prep_dict_stage=1.2.2;
 #	;;
 #	1.2.3)
 echo "  generate vocab-weird.txt";
@@ -63,12 +72,14 @@ echo "  generate vocab-weird.txt";
 #  perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+$/;}' > $dict_dir/vocab-weird.txt ;
 cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
   perl -CSD -Mutf8 -ane '{print unless /^\p{InCJK_Unified_Ideographs}+/;}' > $dict_dir/vocab-weird.txt ;
+
+	prep_dict_stage=1.2.3;
 #		;;
 #	1.2.4)
 	echo "  split into English and Chinese done!"; echo "";
 	;;
 	2) echo ""; echo "  prep_dict_step $prep_dict_step prepare dict for english."; echo "";
-	
+	prep_dict_stage=2;
 #	;;
 #	2.1)
 	echo "prep_dict 2.1":
@@ -88,17 +99,22 @@ if [ -f $dict_dir/cmudict/scripts/make_baseform.pl ] ; then
   echo "$0: $dict_dir/cmudict/scripts/make_baseform.pl exist!";
 echo "cmudict is fine.";
 echo "";
-#  exit
+  #exit
 fi
+
+	prep_dict_stage=2.1;
 #	;;
 #	2.2) 
 	echo "prep_dict 2.2";
+	prep_dict_stage=2.2;
 #	;;
 #	2.2.1)
 echo "--- Striping stress and pronunciation variant markers from cmudict ..."
 perl $dict_dir/cmudict/scripts/make_baseform.pl \
   $dict_dir/cmudict/cmudict.0.7a /dev/stdout |\
   sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' > $dict_dir/cmudict-plain.txt ;
+
+	prep_dict_stage=2.2.1;
 	;;
 	2.2.2)
 echo "--- Searching for English OOV words ..."
@@ -357,3 +373,4 @@ esac
 
 echo "    prep_dict4seame.sh ends (actually run by $0).";
 echo "";
+echo "prep_dict_step $1 ended with prep_dict_stage $prep_dict_stage";
