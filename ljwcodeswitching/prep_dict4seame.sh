@@ -115,21 +115,30 @@ perl $dict_dir/cmudict/scripts/make_baseform.pl \
   sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' > $dict_dir/cmudict-plain.txt ;
 
 	prep_dict_stage=2.2.1;
-	;;
-	2.2.2)
+#	;;
+#	2.2.2)
 echo "--- Searching for English OOV words ..."
 gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
   $dict_dir/cmudict-plain.txt $dict_dir/vocab-en.txt |\
   egrep -v '<.?s>' > $dict_dir/vocab-en-oov.txt
 
+	prep_dict_stage=2.2.2;
+#	;;
+#	2.2.3)	
+echo "--- Searching for English IV words ..."
 gawk 'NR==FNR{words[$1]; next;} ($1 in words)' \
   $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt |\
   egrep -v '<.?s>' > $dict_dir/lexicon-en-iv.txt
 
+	prep_dict_stage=2.2.3;
+	;;
+	2.2.4)
 wc -l $dict_dir/vocab-en-oov.txt
 wc -l $dict_dir/lexicon-en-iv.txt
 
-
+	prep_dict_stage=2.2.5;
+	;;
+	2.2.5)
 if [ ! -f conf/g2p_model ]; then
   echo "--- Downloading a pre-trained Sequitur G2P model ..."
   wget http://sourceforge.net/projects/kaldi/files/sequitur-model4 -O conf/g2p_model
