@@ -260,6 +260,8 @@ exit 0
     
     * )
     echo "  It looks like you didn't provide the step for run.sh"
+    echo "  Please runs like:"
+    echo "    sh run.sh 1 >> run.log";
     ;;
 
 esac
