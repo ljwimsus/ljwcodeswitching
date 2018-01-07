@@ -25,10 +25,11 @@ echo ""
 
 case $prep_dict_step in    #prepare dict steps
 	
-    0) echo "  prep_dict_step $prep_dict_step do nothing";
+    0) echo ""; echo "  prep_dict_step $prep_dict_step do nothing"; echo "";
 
 	;;
-	1) echo "  prep_dict_step $prep_dict_step extract and split dict text.";
+	1) echo ""; echo "  prep_dict_step $prep_dict_step do nothing"; echo "";
+		echo "  prep_dict_step $prep_dict_step extract and split dict text.";
 		echo "  Please seperately call prep_dict_step 1.1 and 1.2";
 	;;
 	1.1) # SEAME eng+man_dict don't have these things
@@ -78,11 +79,12 @@ cat $dict_dir/vocab-full.txt | grep -v '^[a-zA-Z]' | \
 #	1.2.4)
 	echo "  split into English and Chinese done!"; echo "";
 	;;
-	2) echo ""; echo "  prep_dict_step $prep_dict_step prepare dict for english."; echo "";
+	2) echo ""; echo "  prep_dict_step $prep_dict_step do nothing, follow 2.x):"; echo "";
+	echo ""; echo "  prep_dict_step $prep_dict_step prepare dict for english."; echo "";
 	prep_dict_stage=2;
 #	;;
 #	2.1)
-	echo "  prep_dict 2.1":
+	echo "  prep_dict 2.1";
 # produce pronunciations for english
 if [ ! -f $dict_dir/cmudict/cmudict.0.7a ]; then
   echo "--- Downloading CMU dictionary ..."
@@ -91,7 +93,7 @@ if [ ! -f $dict_dir/cmudict/cmudict.0.7a ]; then
 fi
 
 if [ ! -f $dict_dir/cmudict/scripts/make_baseform.pl ] ; then
-  echo "$0: $dict_dir/cmudict/scripts/make_baseform.pl does not exist!";
+  echo "    $0: $dict_dir/cmudict/scripts/make_baseform.pl does not exist!";
   exit
 fi
 
@@ -125,12 +127,12 @@ echo "--- Searching for English OOV words ..."
 #  $dict_dir/cmudict-plain.txt $dict_dir/vocab-en.txt |\
 #  egrep -v '<.?s>' > $dict_dir/vocab-en-oov.txt
 gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
-  $dict_dir/cmudict-plain.txt $dict_dir/vocab-en.txt > $dict_dir/temp.txt;
-  if [ ! -s $dict_dir/temp.txt ];
-    then echo "    $dict_dir/temp.txt exist but it is zero! OVV words is generated empty."; echo "";
+  $dict_dir/cmudict-plain.txt $dict_dir/vocab-en.txt > $dict_dir/vocab-en-oov-temp.txt;
+  if [ ! -s $dict_dir/vocab-en-oov-temp.txt ];
+    then echo "    $dict_dir/vocab-en-oov-temp.txt exist but it is zero! OVV words is generated empty."; echo "";
     	     echo "" > $dict_dir/vocab-en-oov.txt;
-    else echo "    $dict_dir/temp.txt esist and not zero then generate OVV words."; echo "";
-  egrep -v '<.?s>' $dict_dir/temp.txt > $dict_dir/vocab-en-oov.txt;
+    else echo "    $dict_dir/vocab-en-oov-temp.txt esist and not zero then generate OVV words."; echo "";
+  egrep -v '<.?s>' $dict_dir/vocab-en-oov-temp.txt > $dict_dir/vocab-en-oov.txt;
   fi
   
 	prep_dict_stage=2.2.2;
@@ -141,19 +143,19 @@ echo "--- Searching for English IV words ..."
 #  $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt |\
 #  egrep -v '<.?s>' > $dict_dir/lexicon-en-iv.txt
 gawk 'NR==FNR{words[$1]; next;} ($1 in words)' \
-  $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt > $dict_dir/temp.txt;
-  #if [ ! -s $dict_dir/temp.txt -a -e $dict_dir/temp.txt ];
-  if [ ! -s $dict_dir/temp.txt ];
-    then echo "    $dict_dir/temp.txt exist but it is zero! IV words is generated empty."; echo "";
+  $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt > $dict_dir/lexicon-en-iv-temp.txt;
+  #if [ ! -s $dict_dir/lexicon-en-iv-temp.txt -a -e $dict_dir/lexicon-en-iv-temp.txt ];
+  if [ ! -s $dict_dir/lexicon-en-iv-temp.txt ];
+    then echo "    $dict_dir/lexicon-en-iv-temp.txt exist but it is zero! IV words is generated empty."; echo "";
     	     echo "" > $dict_dir/lexicon-en-iv.txt;
-    else echo "    $dict_dir/temp.txt esist and not zero then generate IV words."; echo "";
-  egrep -v '<.?s>' $dict_dir/temp.txt > $dict_dir/lexicon-en-iv.txt;
+    else echo "    $dict_dir/lexicon-en-iv-temp.txt esist and not zero then generate IV words."; echo "";
+  egrep -v '<.?s>' $dict_dir/lexicon-en-iv-temp.txt > $dict_dir/lexicon-en-iv.txt;
   fi
   
 	prep_dict_stage=2.2.3;
 #	;;
 #	2.2.4)
-	echo "OVV and IV results:";
+	echo "English OVV and IV results:";
 wc -l $dict_dir/vocab-en-oov.txt
 wc -l $dict_dir/lexicon-en-iv.txt
 	echo "";
@@ -185,15 +187,38 @@ cat $dict_dir/lexicon-en-oov.txt $dict_dir/lexicon-en-iv.txt |\
 
 
 	;;
-	3) echo "  prep_dict_step $prep_dict_step prepare dict for chinese";
-
-
+	3) echo "";echo "  prep_dict_step $prep_dict_step do nothing, follow 3.x):"; echo "";
+	echo ""; echo "  prep_dict_step $prep_dict_step prepare dict for chinese"; echo "";
+	prep_dict_stage=3;
+	;;
+	3.1)
+	echo "    prep_dict 3.1";
 # produce pronunciations for chinese
 if [ ! -f $dict_dir/cedict_1_0_ts_utf-8_mdbg.txt ]; then
+  echo "--- Downloading MDBG dictionary ..."
   wget -P $dict_dir http://www.mdbg.net/chindict/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz
   gunzip $dict_dir/cedict_1_0_ts_utf-8_mdbg.txt.gz
 fi
 
+if [ ! -f $dict_dir/cedict_1_0_ts_utf-8_mdbg.txt ] ; then
+  echo "    $0: $dict_dir/cedict_1_0_ts_utf-8_mdbg.txt does not exist!";
+  exit
+fi
+
+if [ -f $dict_dir/cedict_1_0_ts_utf-8_mdbg.txt ] ; then
+  echo "    $0: $dict_dir/cedict_1_0_ts_utf-8_mdbg.txt exist!";
+echo "    mdbgdict is fine.";
+echo "";
+  #exit
+fi
+
+	prep_dict_stage=3.1;
+#	;;
+#	3.2) 
+	echo "  prep_dict 3.2";
+	prep_dict_stage=3.2;
+	;;
+	3.2.1)
 cat $dict_dir/cedict_1_0_ts_utf-8_mdbg.txt | grep -v '#' | awk -F '/' '{print $1}' |\
  perl -e '
   while (<STDIN>) {
@@ -208,19 +233,48 @@ cat $dict_dir/cedict_1_0_ts_utf-8_mdbg.txt | grep -v '#' | awk -F '/' '{print $1
   }
  ' | sort -k1 > $dict_dir/ch-dict.txt
 
+	prep_dict_stage=3.2.1;
+	;;
+	3.2.2)
 echo "--- Searching for Chinese OOV words ..."
+#gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
+#  $dict_dir/ch-dict.txt $dict_dir/vocab-ch.txt |\
+#  egrep -v '<.?s>' > $dict_dir/vocab-ch-oov.txt
 gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
-  $dict_dir/ch-dict.txt $dict_dir/vocab-ch.txt |\
-  egrep -v '<.?s>' > $dict_dir/vocab-ch-oov.txt
-
+  $dict_dir/ch-dict.txt $dict_dir/vocab-ch.txt > $dict_dir/vocab-ch-oov-temp.txt;
+  if [ ! -s $dict_dir/vocab-ch-oov-temp.txt ];
+    then echo "    $dict_dir/vocab-ch-oov-temp.txt exist but it is zero! OVV words is generated empty."; echo "";
+    	     echo "" > $dict_dir/vocab-ch-oov.txt;
+    else echo "    $dict_dir/vocab-ch-oov-temp.txt esist and not zero then generate OVV words."; echo "";
+  egrep -v '<.?s>' $dict_dir/vocab-ch-oov-temp.txt > $dict_dir/vocab-ch-oov.txt;
+  fi   
+	prep_dict_stage=3.2.2;
+	;;
+	3.2.3)	
+echo "--- Searching for Chinese IV words ..."
+#gawk 'NR==FNR{words[$1]; next;} ($1 in words)' \
+#  $dict_dir/vocab-ch.txt $dict_dir/ch-dict.txt |\
+#  egrep -v '<.?s>' > $dict_dir/lexicon-ch-iv.txt
 gawk 'NR==FNR{words[$1]; next;} ($1 in words)' \
-  $dict_dir/vocab-ch.txt $dict_dir/ch-dict.txt |\
-  egrep -v '<.?s>' > $dict_dir/lexicon-ch-iv.txt
+  $dict_dir/vocab-ch.txt $dict_dir/ch-dict.txt > $dict_dir/lexicon-ch-iv-temp.txt;
+  if [ ! -s $dict_dir/lexicon-ch-iv-temp.txt ];
+    then echo "    $dict_dir/lexicon-ch-iv-temp.txt exist but it is zero! IV words is generated empty."; echo "";
+    	     echo "" > $dict_dir/lexicon-ch-iv.txt;
+    else echo "    $dict_dir/lexicon-ch-iv-temp.txt esist and not zero then generate IV words."; echo "";
+  egrep -v '<.?s>' $dict_dir/lexicon-ch-iv-temp.txt > $dict_dir/lexicon-ch-iv.txt;
+  fi
 
+	prep_dict_stage=3.2.3;
+	;;
+	3.2.4)
+	echo "Chinese OVV and IV results:";
 wc -l $dict_dir/vocab-ch-oov.txt || true
 wc -l $dict_dir/lexicon-ch-iv.txt || true
+	echo "";
 
-
+	prep_dict_stage=3.2.4;
+	;;
+	3.2.5)
 
 # this
 unset LC_ALL
