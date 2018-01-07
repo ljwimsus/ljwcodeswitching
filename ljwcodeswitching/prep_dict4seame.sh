@@ -160,7 +160,7 @@ wc -l $dict_dir/vocab-en-oov.txt
 wc -l $dict_dir/lexicon-en-iv.txt
 	echo "";
 	
-	prep_dict_stage=2.2.5;
+	prep_dict_stage=2.2.4;
 	;;
 	2.2.5)
 if [ ! -f conf/g2p_model ]; then
@@ -173,7 +173,7 @@ if [ ! -f conf/g2p_model ]; then
 fi
 
 	;;
-	2.3)
+	2.2.6)
 echo "--- Preparing pronunciations for OOV words ..."
 g2p=`which g2p.py`
 if [ ! -x $g2p ]; then
