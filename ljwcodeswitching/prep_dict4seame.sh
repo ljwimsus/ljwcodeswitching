@@ -110,26 +110,40 @@ fi
 #	;;
 #	2.2.1)
 echo "--- Striping stress and pronunciation variant markers from cmudict ..."
+#perl $dict_dir/cmudict/scripts/make_baseform.pl \
+#  $dict_dir/cmudict/cmudict.0.7a /dev/stdout |\
+#  sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' > $dict_dir/cmudict-plain.txt ;
 perl $dict_dir/cmudict/scripts/make_baseform.pl \
-  $dict_dir/cmudict/cmudict.0.7a /dev/stdout |\
-  sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' > $dict_dir/cmudict-plain.txt ;
+  $dict_dir/cmudict/cmudict.0.7a /dev/stdout > $dict_dir/temp.txt;
+  sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' $dict_dir/temp.txt > $dict_dir/cmudict-plain.txt ;
 
 	prep_dict_stage=2.2.1;
 #	;;
 #	2.2.2)
 echo "--- Searching for English OOV words ..."
+#gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
+#  $dict_dir/cmudict-plain.txt $dict_dir/vocab-en.txt |\
+#  egrep -v '<.?s>' > $dict_dir/vocab-en-oov.txt
 gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
-  $dict_dir/cmudict-plain.txt $dict_dir/vocab-en.txt |\
-  egrep -v '<.?s>' > $dict_dir/vocab-en-oov.txt
-
+  $dict_dir/cmudict-plain.txt $dict_dir/vocab-en.txt > $dict_dir/temp.txt;
+  egrep -v '<.?s>' $dict_dir/temp.txt > $dict_dir/vocab-en-oov.txt;
+  
 	prep_dict_stage=2.2.2;
 #	;;
 #	2.2.3)	
 echo "--- Searching for English IV words ..."
-gawk 'NR==FNR{words[$1]; next;} ($1 in words)' \
-  $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt #|\
+#gawk 'NR==FNR{words[$1]; next;} ($1 in words)' \
+#  $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt |\
 #  egrep -v '<.?s>' > $dict_dir/lexicon-en-iv.txt
-
+gawk 'NR==FNR{words[$1]; next;} ($1 in words)' \
+  $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt > $dict_dir/temp.txt;
+  #if [ ! -s $dict_dir/temp.txt -a -e $dict_dir/temp.txt ];
+  if [ ! -s $dict_dir/temp.txt ];
+    then echo "temp.txt exist but it is zero! IV words will not generate.";
+    else echo "temp.txt esist and not zero then generate IV words.";	
+  egrep -v '<.?s>' $dict_dir/temp.txt > $dict_dir/lexicon-en-iv.txt;
+  fi
+  
 	prep_dict_stage=2.2.3;
 	;;
 	2.2.4)
