@@ -126,7 +126,11 @@ echo "--- Searching for English OOV words ..."
 #  egrep -v '<.?s>' > $dict_dir/vocab-en-oov.txt
 gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
   $dict_dir/cmudict-plain.txt $dict_dir/vocab-en.txt > $dict_dir/temp.txt;
+  if [ ! -s $dict_dir/temp.txt ];
+    then echo "    $dict_dir/temp.txt exist but it is zero! OVV words will not generate.";
+    else echo "    $dict_dir/temp.txt esist and not zero then generate OVV words.";
   egrep -v '<.?s>' $dict_dir/temp.txt > $dict_dir/vocab-en-oov.txt;
+  fi
   
 	prep_dict_stage=2.2.2;
 #	;;
@@ -139,8 +143,8 @@ gawk 'NR==FNR{words[$1]; next;} ($1 in words)' \
   $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt > $dict_dir/temp.txt;
   #if [ ! -s $dict_dir/temp.txt -a -e $dict_dir/temp.txt ];
   if [ ! -s $dict_dir/temp.txt ];
-    then echo "temp.txt exist but it is zero! IV words will not generate.";
-    else echo "temp.txt esist and not zero then generate IV words.";	
+    then echo "    $dict_dir/temp.txt exist but it is zero! IV words will not generate.";
+    else echo "    $dict_dir/temp.txt esist and not zero then generate IV words.";	
   egrep -v '<.?s>' $dict_dir/temp.txt > $dict_dir/lexicon-en-iv.txt;
   fi
   
