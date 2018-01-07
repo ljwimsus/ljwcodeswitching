@@ -119,6 +119,7 @@ perl $dict_dir/cmudict/scripts/make_baseform.pl \
   $dict_dir/cmudict/cmudict.0.7a /dev/stdout > $dict_dir/temp.txt 2>>run.log;
   sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' $dict_dir/temp.txt > $dict_dir/cmudict-plain.txt ;
 
+	echo "";
 	prep_dict_stage=2.2.1;
 #	;;
 #	2.2.2)
@@ -248,6 +249,7 @@ gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
     else echo "    $dict_dir/vocab-ch-oov-temp.txt esist and not zero then generate OVV words."; echo "";
   egrep -v '<.?s>' $dict_dir/vocab-ch-oov-temp.txt > $dict_dir/vocab-ch-oov.txt;
   fi   
+
 	prep_dict_stage=3.2.2;
 	;;
 	3.2.3)	
