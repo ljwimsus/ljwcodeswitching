@@ -109,7 +109,7 @@ fi
 	prep_dict_stage=2.2;
 #	;;
 #	2.2.1)
-echo "--- Striping stress and pronunciation variant markers from cmudict ..."
+echo "--- Striping stress and pronunciation variant markers from cmudict ..."; echo "";
 #perl $dict_dir/cmudict/scripts/make_baseform.pl \
 #  $dict_dir/cmudict/cmudict.0.7a /dev/stdout |\
 #  sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' > $dict_dir/cmudict-plain.txt ;
@@ -127,9 +127,9 @@ echo "--- Searching for English OOV words ..."
 gawk 'NR==FNR{words[$1]; next;} !($1 in words)' \
   $dict_dir/cmudict-plain.txt $dict_dir/vocab-en.txt > $dict_dir/temp.txt;
   if [ ! -s $dict_dir/temp.txt ];
-    then echo "    $dict_dir/temp.txt exist but it is zero! OVV words is generated empty.";
+    then echo "    $dict_dir/temp.txt exist but it is zero! OVV words is generated empty."; echo "";
     	     echo "" > $dict_dir/vocab-en-oov.txt;
-    else echo "    $dict_dir/temp.txt esist and not zero then generate OVV words.";
+    else echo "    $dict_dir/temp.txt esist and not zero then generate OVV words."; echo "";
   egrep -v '<.?s>' $dict_dir/temp.txt > $dict_dir/vocab-en-oov.txt;
   fi
   
@@ -144,18 +144,20 @@ gawk 'NR==FNR{words[$1]; next;} ($1 in words)' \
   $dict_dir/vocab-en.txt $dict_dir/cmudict-plain.txt > $dict_dir/temp.txt;
   #if [ ! -s $dict_dir/temp.txt -a -e $dict_dir/temp.txt ];
   if [ ! -s $dict_dir/temp.txt ];
-    then echo "    $dict_dir/temp.txt exist but it is zero! IV words is generated empty.";
+    then echo "    $dict_dir/temp.txt exist but it is zero! IV words is generated empty."; echo "";
     	     echo "" > $dict_dir/lexicon-en-iv.txt;
-    else echo "    $dict_dir/temp.txt esist and not zero then generate IV words.";	
+    else echo "    $dict_dir/temp.txt esist and not zero then generate IV words."; echo "";
   egrep -v '<.?s>' $dict_dir/temp.txt > $dict_dir/lexicon-en-iv.txt;
   fi
   
 	prep_dict_stage=2.2.3;
-	;;
-	2.2.4)
+#	;;
+#	2.2.4)
+	echo "OVV and IV results:";
 wc -l $dict_dir/vocab-en-oov.txt
 wc -l $dict_dir/lexicon-en-iv.txt
-
+	echo "";
+	
 	prep_dict_stage=2.2.5;
 	;;
 	2.2.5)
