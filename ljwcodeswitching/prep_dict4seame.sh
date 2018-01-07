@@ -116,7 +116,7 @@ echo "--- Striping stress and pronunciation variant markers from cmudict ..."; e
 #  $dict_dir/cmudict/cmudict.0.7a /dev/stdout |\
 #  sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' > $dict_dir/cmudict-plain.txt ;
 perl $dict_dir/cmudict/scripts/make_baseform.pl \
-  $dict_dir/cmudict/cmudict.0.7a /dev/stdout > $dict_dir/temp.txt;
+  $dict_dir/cmudict/cmudict.0.7a /dev/stdout > $dict_dir/temp.txt 2>>run.log;
   sed -e 's:^\([^\s(]\+\)([0-9]\+)\(\s\+\)\(.*\):\1\2\3:' $dict_dir/temp.txt > $dict_dir/cmudict-plain.txt ;
 
 	prep_dict_stage=2.2.1;
