@@ -51,30 +51,38 @@ seameData=SEAME/
 set -e -o pipefail
 set -x
 
-	echo "  step $step ends.";
-#	;;
-	
+#	echo "$@"; echo ${AUDIO[@]};
+#	utils/make_absolute.sh "${@: -1}" 2>&1;
+#	utils/make_absolute.sh "${AUDIO[@]}" 2>&1;
+
+	echo ""; echo "  step $step ends."; echo "";
+
+#	;;	
 #  1.1)
 
 #local/gale_data_prep_audio.sh "${AUDIO[@]}" $galeData
 
-	echo "  step 1.1 skips.";
-#	;;
+#	echo "  step 1.1 skips.";
 	
-#  1.2)
+local/gale_data_prep_audio.sh "${AUDIO[@]}" $galeData
+
+	echo ""; echo "  step 1.1 ended."; echo "";
+
+	;;	
+  1.2)
 
 #local/gale_data_prep_txt.sh  "${TEXT[@]}" $galeData
 
 	echo "  step 1.2 skips.";
-#	;;
-	
+
+#	;;	
 #  1.3)
 
 #local/gale_data_prep_split.sh $galeData
 
 	echo "  step 1.3 skips.";
-#	;;
-	
+
+#	;;	
 #  1.4)
   
 #local/gale_prep_dict.sh
@@ -84,7 +92,7 @@ set -x
 local/seame_prep_dict.sh 2;
 
 
-    echo "  step 1.4 ends."; echo "";
+    echo "  step 1.4 ended."; echo "";
     ;;
 
   2 ) echo ""; echo "  step $step begins:";
