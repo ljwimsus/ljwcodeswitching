@@ -64,7 +64,7 @@ set -x
 
 #	echo "  step 1.1 skips.";
 	
-local/gale_data_prep_audio.sh "${AUDIO[@]}" $galeData
+local/seame_data_prep_audio.sh "${AUDIO[@]}" $galeData
 
 	echo ""; echo "  step 1.1 ended."; echo "";
 
