@@ -4,6 +4,16 @@
 # Copyright 2016 Johns Hopkins Univeersity (author: Jan "Yenda" Trmal)
 # Apache 2.0
 
+echo "";
+echo "    data_prep_audio4seame.sh begins (actually run by $0).";
+
+
+case $prep_dict_step in    #prepare dict steps
+	
+    0) echo ""; echo "  prep_dict_step $prep_dict_step do nothing"; echo "";
+    	
+    	;;
+    	1)
 
 echo $0 "$@"
 
@@ -67,3 +77,12 @@ echo "$0: data prep audio succeded"
 
 exit 0
 
+	;;
+	*) echo "  It seems you didn't provide the data_prep_audio_step.";
+esac
+
+echo "";
+echo "    prep_dict4seame.sh ends (actually run by $0).";
+echo "";
+#echo "    prep_dict_step $1 ended with prep_dict_stage $prep_dict_stage";
+#echo "";
