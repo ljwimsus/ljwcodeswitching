@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "";
+echo "    data_prep4seame.sh begins (actually runs by $0).";
+echo "";
+
 . ./path.sh || exit 1;
 
 if [ $# != 2 ]; then
