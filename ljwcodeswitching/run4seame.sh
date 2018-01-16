@@ -79,17 +79,17 @@ local/seame_data_prep_audio.sh "${AUDIO[@]}" $galeData
 
 #local/gale_data_prep_txt.sh  "${TEXT[@]}" $galeData
 
-	echo "  step 1.2 skips.";
+	echo ""; echo "  step 1.2 ended."; echo "";
 
-#	;;	
-#  1.3)
+	;;	
+  1.3)
 
 #local/gale_data_prep_split.sh $galeData
 
-	echo "  step 1.3 skips.";
+	echo ""; echo "  step 1.3 ended."; echo "";
 
-#	;;	
-#  1.4)
+	;;	
+  1.4)
   
 #local/gale_prep_dict.sh
 #local/seame_prep_dict.sh
