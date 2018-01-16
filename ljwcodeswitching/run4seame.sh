@@ -56,9 +56,15 @@ set -x
 #	utils/make_absolute.sh "${AUDIO[@]}" 2>&1;
 
 	echo ""; echo "  step $step ends."; echo "";
+	
+	;;
+  1.0)
+  	local/seame_data_prep_audio.sh
+  	
+  	echo ""; echo "  step 1.0 ended."; echo "";
 
-#	;;	
-#  1.1)
+	;;	
+  1.1)
 
 #local/gale_data_prep_audio.sh "${AUDIO[@]}" $galeData
 
