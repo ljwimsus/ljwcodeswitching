@@ -8,6 +8,7 @@
 
 echo "";
 echo "    prep_dict4seame.sh begins (actually run by $0).";
+echo "";
 
 . ./path.sh
 
