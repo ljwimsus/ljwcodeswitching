@@ -1,8 +1,14 @@
 echo ""
 echo "begin of path4seame.sh (actually calls from $0)"
 
+systemname=`uname -s`;
+
+if [ $systemname = Linux ]; then echo ""; echo "It's on Linux!"; echo "";
+	
+else
+
 export SEAME_ROOT=~/SEAME
-export KALDI_ROOT=~/kaldi/kaldi
+export KALDI_ROOT=~/kaldi
 export PATH=$PWD/utils/:$KALDI_ROOT/tools/openfst/bin:$KALDI_ROOT/tools/kaldi_lm:$PWD:$PATH
 [ ! -f $KALDI_ROOT/tools/config/common_path.sh ] && echo >&2 "The standard file $KALDI_ROOT/tools/config/common_path.sh is not present -> Exit!" && exit 1
 # :' . $KALDI_ROOT/tools/config/common_path.sh '
@@ -15,6 +21,9 @@ echo "    call of env.sh"
 echo "    end of env.sh"
 
 export LC_ALL=C
+
+
+fi
 
 echo "end of path4seame.sh (actually called from $0)."
 echo ""
