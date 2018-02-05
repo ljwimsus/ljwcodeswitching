@@ -12,12 +12,12 @@ echo ""
 step=$1;
 
 case $step in
-  0 )echo "  step $step begins:";
+  0 )echo "  step $step begins:"; #used to test case structure or set paths
 . ./path.sh
     echo "  step $step ends.";
     ;;
 
-  1 ) echo "  step $step begins:";
+  1 ) echo "  step $step begins:"; #used to set audio and text data
   
 . ./path.sh
 . ./cmd.sh
@@ -58,13 +58,13 @@ set -x
 	echo ""; echo "  step $step ends."; echo "";
 	
 	;;
-  1.0)
-  	local/seame_data_prep_audio.sh
+  1.0) #used to call seame data preparing script
+  	local/seame_data_prep.sh
   	
   	echo ""; echo "  step 1.0 ended."; echo "";
 
 	;;	
-  1.1)
+  1.1) #used to call seame audio data preparing script
 
 #local/gale_data_prep_audio.sh "${AUDIO[@]}" $galeData
 
@@ -75,21 +75,21 @@ local/seame_data_prep_audio.sh "${AUDIO[@]}" $galeData
 	echo ""; echo "  step 1.1 ended."; echo "";
 
 	;;	
-  1.2)
+  1.2) #used to call seame text data preparing script
 
 #local/gale_data_prep_txt.sh  "${TEXT[@]}" $galeData
 
 	echo ""; echo "  step 1.2 ended."; echo "";
 
 	;;	
-  1.3)
+  1.3) #used to split data in to train, dev and test sets
 
 #local/gale_data_prep_split.sh $galeData
 
 	echo ""; echo "  step 1.3 ended."; echo "";
 
 	;;	
-  1.4)
+  1.4) #used to call dictionary preparing script
   
 #local/gale_prep_dict.sh
 #local/seame_prep_dict.sh
@@ -101,7 +101,7 @@ local/seame_prep_dict.sh 2;
     echo "  step 1.4 ended."; echo "";
     ;;
 
-  2 ) echo ""; echo "  step $step begins:";
+  2 ) echo ""; echo "  step $step begins:"; #used to call training script
 
 
 utils/prepare_lang.sh data/local/dict "<UNK>" data/local/lang data/lang
