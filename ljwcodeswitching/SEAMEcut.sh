@@ -1,16 +1,16 @@
-filename=$1; echo filename $1; # format: path/NI01MAX_0101
+transcriptname=$1; echo transcriptname $1; # format: path/NI01MAX_0101
 
 scriptname=$0; echo scriptname $0;
 
-: ' ffmpeg -i ${filename}.flac ${filename}.wav; ';
+: ' ffmpeg -i ${transcriptname}.flac ${transcriptname}.wav; ';
 
  linenum=1;
 
 echo "" > ${scriptname}-ffmpeg.sh;
 
-cat ${filename}.txt | while read line ; do echo; echo line#${linenum} ${line};
+cat ${transcriptname}.txt | while read line ; do echo; echo line#${linenum} ${line};
 
-singleline=${line/${filename}/}; echo singleline ${singleline};
+singleline=${line/${transcriptname}/}; echo singleline ${singleline};
 
 singlelinetext=${singleline//[0-9]/}; echo singlelinetext ${singlelinetext};
  singlelinetimecut1=${singleline%[0-9]*}; echo singlelinetimecut1 ${singlelinetimecut1};
@@ -31,8 +31,8 @@ starttimeposition=${starttimesec}.${starttimemillisec}; echo starttimeposition $
 endtimeposition=${endtimesec}.${endtimemillisec}; echo endtimeposition ${endtimeposition};
  
 
-: ' echo "ffmpeg -i ${filename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${filename}.${starttimeposition}-${endtimeposition}.wav; " >> ${scriptname}-ffmpeg.sh; ';
-echo "ffmpeg -i ${filename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${filename}.${linenum}.wav; " >> ${scriptname}-ffmpeg.sh;
+: ' echo "ffmpeg -i ${transcriptname}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${transcriptname}.${starttimeposition}-${endtimeposition}.wav; " >> ${scriptname}-ffmpeg.sh; ';
+echo "ffmpeg -i ${transcriptname}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${transcriptname}.${linenum}.wav; " >> ${scriptname}-ffmpeg.sh;
 
 
  linenum=`expr ${linenum} + 1`;
@@ -62,4 +62,4 @@ done;
 
  unset linenum;
  unset scriptname;
- unset filename;
+ unset transcriptname;
