@@ -47,7 +47,7 @@ echo "cd to `pwd`";
 # fixed the ./cut/${utterancename}.wav problem
 #echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ${currentpath}/cut/${utterancename}.wav;" >> ${currentpath}/cut/${utterancename}-ffmpeg-flac2wav.sh;
 # seprated the flac2wav operations
-echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ${currentpath}/cut/${utterancename}.wav;" >> ${currentpath}/cut/${utterancename}-ffmpeg-flac2wav.sh;
+echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ${currentpath}/cut/${utterancename}.wav;" >> ${currentpath}/cut/ffmepg-flac2wav.sh4parallel.sh;
 
  # initial linenum is 1
  linenum=1;
@@ -102,7 +102,7 @@ endtimeposition=${endtimesec}.${endtimemillisec}; echo endtimeposition ${endtime
 echo "ffmpeg -y -i ${currentpath}/cut/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/cut/${utterancename}/${utterancename}.${linenumbername}.wav; " >> ${currentpath}/cut/${utterancename}-ffmpeg-splitwav.sh;
 ##
 # generating ${currentpath}/cut/${utterancename}-ffmpeg-splitwav.sh list for parallel excution
-echo "${currentpath}/cut/${utterancename}-ffmpeg-splitwav.sh 2>&1 | tee -a ${currentpath}/cut/${utterancename}-ffmpeg.log.txt 2>&1" >> ${currentpath}/cut/ffmepg.sh4parallel.sh
+echo "${currentpath}/cut/${utterancename}-ffmpeg-splitwav.sh 2>&1 | tee -a ${currentpath}/cut/${utterancename}-ffmpeg.log.txt 2>&1" >> ${currentpath}/cut/ffmepg-splitwav.sh4parallel.sh
 
  # increasing the linenum for next loop
  linenum=`expr ${linenum} + 1`;
