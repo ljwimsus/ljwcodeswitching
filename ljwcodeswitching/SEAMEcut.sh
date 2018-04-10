@@ -66,12 +66,17 @@ singlelinetime=${singleline:0:${singlelinetimeplus1}}; echo singlelinetime ${sin
 #:<<\### multiline comments begins
 
 # try to catch each transcript line's beginning and ending position in millisecond format
- starttime=${singlelinetime%[^0-9]*}; echo starttime ${starttime}; 
+# on v1.0.2 the following lines will crash when starttime is 0 !!! 
+# an if test is need!!!
+ starttime=${singlelinetime%[^0-9]*}; echo starttime ${starttime};
+    if [ ${starttime} == 0 ]; then
+    	starttimeposition = 0;
+    else
  starttimelength=${#starttime}; echo starttimelength ${starttimelength};
  starttimesec=${starttime:0:${starttimelength}-3}; echo starttimesec ${starttimesec};
  starttimemillisec=${starttime:0-3:3}; echo starttimemillisec ${starttimemillisec};
 starttimeposition=${starttimesec}.${starttimemillisec}; echo starttimeposition ${starttimeposition};
-
+    fi
  endtime=${singlelinetime##*[^0-9]}; echo endtime ${endtime}; 
  endtimelength=${#endtime}; echo endtimelength ${endtimelength};
  endtimesec=${endtime:0:${endtimelength}-3}; echo endtimesec ${endtimesec};
