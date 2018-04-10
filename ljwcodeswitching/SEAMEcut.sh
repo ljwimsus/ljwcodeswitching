@@ -5,6 +5,10 @@ if [ $# != 2 ]; then
   echo "parameters is empty!"
   echo "Usage: $0 <transcript-absolute-path-with/> <transcript-name>"
   echo " $0 /Volumes/Data/thesis/SEAME/ NI01MAX_0101"
+  echo ""
+  echo "Be awared that the audio list should have one empty line at the end!"
+  echo "to get the last loop's 2>&1 "
+  echo ""
   exit 1;
 fi
 
@@ -14,7 +18,7 @@ fi
 transcriptpath=`echo ${1} | sed 's/\.txt//g' | sed 's/\.flac//g' | sed 's/\.wav//g'`; echo transcriptpath $1; #absolute path to transcript folder
 transcriptname=`echo ${2} | sed 's/\.txt//g' | sed 's/\.flac//g' | sed 's/\.wav//g'`; echo transcriptname $transcriptname; #transcript filename
 
-utterancename=$transcriptname;
+utterancename=$transcriptname; echo ""; echo "ffmpeg processing for ${utterancename} begins!"; echo "";
 
 audiopath=${transcriptpath/transcript/audio}; echo audiopath $audiopath;
 
@@ -116,6 +120,8 @@ done;
  echo "back to currentpath";
  cd $currentpath; pwd;
  echo ""
+ echo ""; 
+ echo "ffmpeg processing for ${utterancename} ends!";
  echo ""
  echo ""
  unset -v scriptname;
