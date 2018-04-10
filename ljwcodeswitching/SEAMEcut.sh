@@ -29,15 +29,16 @@ cd $transcriptpath/;
 echo "cd to `pwd`";
 #
 
+
  # prepare the temporary flac2wav.wav for later utterances seperation 
  # rm -f ./cut/${utterancename}.wav;
- ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;
+# ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;
+# on v1.0.1 test, the above line cause $1 and $2 confusing
+# should move this operations to ${utterancename}-ffmpeg.sh as below:
+echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;" > ${currentpath}/cut/${utterancename}-ffmpeg.sh;
 
  # initial linenum is 1
  linenum=1;
-
-echo "" > ${currentpath}/cut/${utterancename}-ffmpeg.sh;
-
 
 cat ${transcriptpath}/${transcriptname}.txt | while read line ; do echo; echo line#${linenum} ${line};
 
