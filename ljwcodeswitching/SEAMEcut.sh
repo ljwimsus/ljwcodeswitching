@@ -22,6 +22,10 @@ audiopath=${transcriptpath/transcript/audio}; echo audiopath $audiopath;
 mkdir ./cut;
 mkdir ./cut/${utterancename};
 
+# create ffmepg.sh4parallel.sh for parallel excution
+echo "" > ${currentpath}/cut/ffmepg.sh4parallel.sh
+
+
 #multiline comments experiment
 :<<\# multiline comments begins
 echo "pwd is `pwd`";
@@ -89,6 +93,8 @@ endtimeposition=${endtimesec}.${endtimemillisec}; echo endtimeposition ${endtime
 # echo "ffmpeg -i ${transcriptname}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${transcriptname}.${linenum}.wav; " >> ${scriptname}-ffmpeg.sh;
 echo "ffmpeg -y -i ${currentpath}/cut/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/cut/${utterancename}/${utterancename}.${linenumbername}.wav; " >> ${currentpath}/cut/${utterancename}-ffmpeg.sh;
 ##
+# generating ${currentpath}/cut/${utterancename}-ffmpeg.sh list for parallel excution
+echo "${currentpath}/cut/${utterancename}-ffmpeg.sh" >> ${currentpath}/cut/ffmepg.sh4parallel.sh
 
  # increasing the linenum for next loop
  linenum=`expr ${linenum} + 1`;
