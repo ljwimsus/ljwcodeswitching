@@ -94,7 +94,7 @@ endtimeposition=${endtimesec}.${endtimemillisec}; echo endtimeposition ${endtime
 echo "ffmpeg -y -i ${currentpath}/cut/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/cut/${utterancename}/${utterancename}.${linenumbername}.wav; " >> ${currentpath}/cut/${utterancename}-ffmpeg.sh;
 ##
 # generating ${currentpath}/cut/${utterancename}-ffmpeg.sh list for parallel excution
-echo "${currentpath}/cut/${utterancename}-ffmpeg.sh" >> ${currentpath}/cut/ffmepg.sh4parallel.sh
+echo "${currentpath}/cut/${utterancename}-ffmpeg.sh 2>&1 | tee -a ${currentpath}/cut/${utterancename}-ffmpeg.log.txt 2>&1" >> ${currentpath}/cut/ffmepg.sh4parallel.sh
 
  # increasing the linenum for next loop
  linenum=`expr ${linenum} + 1`;
