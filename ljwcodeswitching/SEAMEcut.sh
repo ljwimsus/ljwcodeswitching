@@ -27,9 +27,9 @@ mkdir ./cut;
 mkdir ./cut/${utterancename};
 
 # create ffmepg.sh4parallel.sh for parallel excution
-echo "" > ${currentpath}/cut/ffmepg-flac2wav.sh4parallel.sh
-echo "" > ${currentpath}/cut/ffmepg-splitwav.sh4parallel.sh
-
+#echo "" > ${currentpath}/cut/ffmepg-flac2wav.sh4parallel.sh
+#echo "" > ${currentpath}/cut/ffmepg-splitwav.sh4parallel.sh
+# the above 2 lines are wrong to run in while loop!!!
 
 #multiline comments experiment
 :<<\# multiline comments begins
