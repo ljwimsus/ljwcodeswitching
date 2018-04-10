@@ -42,10 +42,12 @@ echo "cd to `pwd`";
  # rm -f ./cut/${utterancename}.wav;
 # ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;
 # on v1.0.1 test, the above line cause $1 and $2 confusing
-# should move this operations to ${utterancename}-ffmpeg.sh as below:
-#echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;" > ${currentpath}/cut/${utterancename}-ffmpeg.sh;
-echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ${currentpath}/cut/${utterancename}.wav;" > ${currentpath}/cut/${utterancename}-ffmpeg.sh;
+# should move this operations to ${utterancename}-ffmpeg-flac2wav.sh as below:
+#echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;" > ${currentpath}/cut/${utterancename}-ffmpeg-flac2wav.sh;
 # fixed the ./cut/${utterancename}.wav problem
+#echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ${currentpath}/cut/${utterancename}.wav;" >> ${currentpath}/cut/${utterancename}-ffmpeg-flac2wav.sh;
+# seprated the flac2wav operations
+echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ${currentpath}/cut/${utterancename}.wav;" >> ${currentpath}/cut/${utterancename}-ffmpeg-flac2wav.sh;
 
  # initial linenum is 1
  linenum=1;
@@ -93,29 +95,29 @@ starttimeposition=${starttimesec}.${starttimemillisec}; echo starttimeposition $
  endtimemillisec=${endtime:0-3:3}; echo endtimemillisec ${endtimemillisec};
 endtimeposition=${endtimesec}.${endtimemillisec}; echo endtimeposition ${endtimeposition};
 
-# output the ffmpeg commands to a -ffmpeg.sh script 
+# output the ffmpeg commands to a -ffmpeg-splitwav.sh script 
 #:<<\## multiline comments begins
-# echo "ffmpeg -i ${transcriptname}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${transcriptname}.${starttimeposition}-${endtimeposition}.wav; " >> ${scriptname}-ffmpeg.sh;
-# echo "ffmpeg -i ${transcriptname}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${transcriptname}.${linenum}.wav; " >> ${scriptname}-ffmpeg.sh;
-echo "ffmpeg -y -i ${currentpath}/cut/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/cut/${utterancename}/${utterancename}.${linenumbername}.wav; " >> ${currentpath}/cut/${utterancename}-ffmpeg.sh;
+# echo "ffmpeg -i ${transcriptname}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${transcriptname}.${starttimeposition}-${endtimeposition}.wav; " >> ${scriptname}-ffmpeg-splitwav.sh;
+# echo "ffmpeg -i ${transcriptname}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ./cut/${transcriptname}.${linenum}.wav; " >> ${scriptname}-ffmpeg-splitwav.sh;
+echo "ffmpeg -y -i ${currentpath}/cut/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/cut/${utterancename}/${utterancename}.${linenumbername}.wav; " >> ${currentpath}/cut/${utterancename}-ffmpeg-splitwav.sh;
 ##
-# generating ${currentpath}/cut/${utterancename}-ffmpeg.sh list for parallel excution
-echo "${currentpath}/cut/${utterancename}-ffmpeg.sh 2>&1 | tee -a ${currentpath}/cut/${utterancename}-ffmpeg.log.txt 2>&1" >> ${currentpath}/cut/ffmepg.sh4parallel.sh
+# generating ${currentpath}/cut/${utterancename}-ffmpeg-splitwav.sh list for parallel excution
+echo "${currentpath}/cut/${utterancename}-ffmpeg-splitwav.sh 2>&1 | tee -a ${currentpath}/cut/${utterancename}-ffmpeg.log.txt 2>&1" >> ${currentpath}/cut/ffmepg.sh4parallel.sh
 
  # increasing the linenum for next loop
  linenum=`expr ${linenum} + 1`;
 
 done;
 
- # excute the -ffmpeg.sh to devide the single line wav to /cut/ folder
-#sh ${currentpath}/cut/${utterancename}-ffmpeg.sh;
- # in v1.0.4 found that excuting ${utterancename}-ffmpeg.sh will cause $1 $2 confusing
+ # excute the -ffmpeg-splitwav.sh to devide the single line wav to /cut/ folder
+#sh ${currentpath}/cut/${utterancename}-ffmpeg-splitwav.sh;
+ # in v1.0.4 found that excuting ${utterancename}-ffmpeg-splitwav.sh will cause $1 $2 confusing
  # remove this line and suggest to run it by an external script calling 
 
 ###
 
-# remove the temporary -ffmpeg.sh and flac2wav.wav
-#rm -f ${currentpath}/cut/${utterancename}-ffmpeg.sh ${currentpath}/cut/${utterancename}.wav;
+# remove the temporary -ffmpeg-splitwav.sh and flac2wav.wav
+#rm -f ${currentpath}/cut/${utterancename}-ffmpeg-splitwav.sh ${currentpath}/cut/${utterancename}.wav;
 
  echo ""
  echo ""
