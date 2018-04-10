@@ -96,7 +96,7 @@ echo "ffmpeg -y -i ${currentpath}/cut/${utterancename}.wav -ss ${starttimepositi
 done;
 
  # excute the -ffmpeg.sh to devide the single line wav to /cut/ folder
-# sh ${currentpath}/cut/${utterancename}-ffmpeg.sh;
+ sh ${currentpath}/cut/${utterancename}-ffmpeg.sh;
 ###
 
 # remove the temporary -ffmpeg.sh and flac2wav.wav
