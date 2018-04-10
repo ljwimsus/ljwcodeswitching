@@ -31,7 +31,7 @@ echo "cd to `pwd`";
 
  # prepare the temporary flac2wav.wav for later utterances seperation 
  # rm -f ./cut/${utterancename}.wav;
- ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;
+# ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;
 
  # initial linenum is 1
  linenum=1;
@@ -90,38 +90,42 @@ echo "ffmpeg -y -i ${currentpath}/cut/${utterancename}.wav -ss ${starttimepositi
 done;
 
  # excute the -ffmpeg.sh to devide the single line wav to /cut/ folder
- sh ${currentpath}/cut/${utterancename}-ffmpeg.sh;
+# sh ${currentpath}/cut/${utterancename}-ffmpeg.sh;
 ###
 
 # remove the temporary -ffmpeg.sh and flac2wav.wav
-rm -f ${currentpath}/cut/${utterancename}-ffmpeg.sh ${currentpath}/cut/${utterancename}.wav;
+#rm -f ${currentpath}/cut/${utterancename}-ffmpeg.sh ${currentpath}/cut/${utterancename}.wav;
 
+ echo ""
+ echo ""
  echo "back to currentpath";
  cd $currentpath; pwd;
- 
- unset scriptname;
- unset currentpath;
- unset transcriptpath;
- unset transcriptname;
- unset utterancename;
- unset audiopath;
- unset linenum;
- unset linenumber;
- unset linenumbername;
- unset line;
- unset singleline;
- unset singlelinetext;
- unset singlelinetime;
- unset singlelinetimecut1;
- unset singlelinetimeminus1;
- unset singlelinetimeplus1;
- unset starttime;
- unset starttimelength;
- unset starttimesec;
- unset starttimemillisec;
- unset starttimeposition;
- unset endtime;
- unset endtimelength;
- unset endtimesec;
- unset endtimemillisec;
- unset endtimeposition;
+ echo ""
+ echo ""
+ echo ""
+ unset -v scriptname;
+ unset -v currentpath;
+ unset -v transcriptpath;
+ unset -v transcriptname;
+ unset -v utterancename;
+ unset -v audiopath;
+ unset -v linenum;
+ unset -v linenumber;
+ unset -v linenumbername;
+ unset -v line;
+ unset -v singleline;
+ unset -v singlelinetext;
+ unset -v singlelinetime;
+ unset -v singlelinetimecut1;
+ unset -v singlelinetimeminus1;
+ unset -v singlelinetimeplus1;
+ unset -v starttime;
+ unset -v starttimelength;
+ unset -v starttimesec;
+ unset -v starttimemillisec;
+ unset -v starttimeposition;
+ unset -v endtime;
+ unset -v endtimelength;
+ unset -v endtimesec;
+ unset -v endtimemillisec;
+ unset -v endtimeposition;
