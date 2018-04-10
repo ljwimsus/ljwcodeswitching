@@ -7,7 +7,7 @@ if [ $# != 2 ]; then
   echo " $0 /Volumes/Data/thesis/SEAME/ NI01MAX_0101"
   echo ""
   echo "Be awared that the audio list should have one empty line at the end!"
-  echo "to get the last loop's 2>&1 "
+  echo "to get the last line of the audio list!"
   echo ""
   exit 1;
 fi
