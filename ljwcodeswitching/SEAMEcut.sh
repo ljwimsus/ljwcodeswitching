@@ -31,7 +31,7 @@ echo "cd to `pwd`";
 
  # prepare the temporary flac2wav.wav for later utterances seperation 
  # rm -f ./cut/${utterancename}.wav;
-# ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;
+ ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;
 
  # initial linenum is 1
  linenum=1;
