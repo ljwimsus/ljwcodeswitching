@@ -43,7 +43,9 @@ echo "cd to `pwd`";
 # ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;
 # on v1.0.1 test, the above line cause $1 and $2 confusing
 # should move this operations to ${utterancename}-ffmpeg.sh as below:
-echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;" > ${currentpath}/cut/${utterancename}-ffmpeg.sh;
+#echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ./cut/${utterancename}.wav;" > ${currentpath}/cut/${utterancename}-ffmpeg.sh;
+echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ${currentpath}/cut/${utterancename}.wav;" > ${currentpath}/cut/${utterancename}-ffmpeg.sh;
+# fixed the ./cut/${utterancename}.wav problem
 
  # initial linenum is 1
  linenum=1;
