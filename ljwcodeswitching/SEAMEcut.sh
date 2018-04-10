@@ -12,7 +12,7 @@ fi
 # transcript location
 # format: path/NI01MAX_0101
 transcriptpath=$1; echo transcriptpath $1; #absolute path to transcript folder
-transcriptname=`echo ${2} | sed 's/\.txt//g' `; echo transcriptname $transcriptname; #transcript filename
+transcriptname=`echo ${2} | sed 's/\.txt//g' | sed 's/\.flac//g' | sed 's/\.wav//g'`; echo transcriptname $transcriptname; #transcript filename
 
 utterancename=$transcriptname;
 
