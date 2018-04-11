@@ -1,3 +1,11 @@
+#!/bin/bash
+
+# the 1.0 version fail in following issues:
+# 1. cannot handle starttime and endtime length shorter than 6 digits
+# 2. parallel pipeline cannot handle xxx.sh but just parallel single ffmpeg operation
+#
+# the 2.0 version will try to cut out or improve the above features
+
 scriptname=$0; echo scriptname $0;
 currentpath=`pwd`; echo currentpath $currentpath;
 
