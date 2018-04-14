@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo ""
+
 # the 1.0 version fail in following issues:
 # 1. cannot handle starttime and endtime length shorter than 6 digits
 # 2. parallel pipeline cannot handle xxx.sh but just parallel single ffmpeg operation
@@ -10,8 +12,12 @@ scriptname=$0; echo scriptname $0;
 currentpath=`pwd`; echo currentpath $currentpath;
 
 if [ $# != 2 ]; then
+  echo ""
   echo "parameters is empty!"
+  echo ""
   echo "Usage: $0 <transcript-absolute-path-with/> <transcript-name>"
+  echo ""
+  echo "e.g.:"
   echo " $0 /Volumes/Data/thesis/SEAME/ NI01MAX_0101"
   echo ""
   echo "Be awared that the audio list should have one empty line at the end!"
@@ -20,15 +26,19 @@ if [ $# != 2 ]; then
   exit 1;
 fi
 
+echo ""
+
 
 # transcript location
 # format: path/NI01MAX_0101
-transcriptpath=`echo ${1} | sed 's/\.txt//g' | sed 's/\.flac//g' | sed 's/\.wav//g' | sed 's/\/$//g`; echo transcriptpath $1; #absolute path to transcript folder
+#transcriptpath=`echo ${1} | sed 's/\.txt//g' | sed 's/\.flac//g' | sed 's/\.wav//g'`; echo transcriptpath $transcriptpath; #absolute path to transcript folder
+transcriptpath=`echo ${1} | sed 's/\.txt//g' | sed 's/\.flac//g' | sed 's/\.wav//g' | sed 's/\/$//g'`; echo transcriptpath $transcriptpath; #absolute path to transcript folder
 transcriptname=`echo ${2} | sed 's/\.txt//g' | sed 's/\.flac//g' | sed 's/\.wav//g'`; echo transcriptname $transcriptname; #transcript filename
-
-utterancename=$transcriptname; echo ""; echo "ffmpeg processing for ${utterancename} begins!"; echo "";
-
+echo "";
+utterancename=$transcriptname; echo "ffmpeg processing for ${utterancename} begins!"; 
+echo "";
 audiopath=${transcriptpath/transcript/audio}; echo audiopath $audiopath;
+echo "";
 
 # should the following experiment remove in higher versions
 #multiline comments experiment
@@ -40,7 +50,8 @@ echo "cd to `pwd`";
 
 
 # use ./cut folder to store the final utterance wav and txt files
- cutfolder = "cut";
+# cutfolder = "cut"; # space should not occur ahead and after =!!! when running, alert "-bash cutfolder: command not found" and continue to excute rm -rf ./$cutfolder as rm -rf ./ 
+cutfolder="cut"; echo "cutefolder $cutfolder";
 ####### rm ./${cutfolder}; # delete old to create new 
 ####### the above line is an extremely dangerous operation!!! when ${cutfolder} misteriously become empty, it delete everything in ./ path.
 if [ $cutfolder == "" ]; then
@@ -58,8 +69,10 @@ fi
 # ./cut is used from v1.0.x
 
 # use ./temp folder to store the temporary files
- tempfolder = "cut"; # used from v2.0
- #tempfolder = "temp"; # to be used in higher versions
+# tempfolder = "cut"; # used from v2.0
+tempfolder="cut"; echo "tempfolder $tempfolder"; # used from v2.0 
+# space should not occur ahead and after =!!! when running, alert "-bash cutfolder: command not found" and continue to excute rm -rf ./$cutfolder as rm -rf ./
+ #tempfolder="temp"; # to be used in higher versions
 ####### rm ./${tempfolder}; # delete old to create new 
 ####### the above line is an extremely dangerous operation!!! when ${cutfolder} misteriously become empty, it delete everything in ./ path.
 if [ $tempfolder == "" ]; then
@@ -157,7 +170,7 @@ endtimeposition=${endtimesec}.${endtimemillisec}; echo endtimeposition ${endtime
 # echo "ffmpeg -y -i ${currentpath}/${cutfolder}/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/${cutfolder}/${utterancename}/${utterancename}.${linenumbername}.wav; " >> ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh;
 #
 # in v2.0.0 the -ffmpeg-splitwav.sh script is prepared for parallel excute the all the single line ffmpeg operations
-echo "ffmpeg -y -i ${currentpath}/${tempfolder}/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/${cutfolder}/${utterancename}/${utterancename}.${linenumbername}.wav 2>&1 | tee -a ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh.log.txt"; " >> ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh;
+echo "ffmpeg -y -i ${currentpath}/${tempfolder}/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/${cutfolder}/${utterancename}/${utterancename}.${linenumbername}.wav 2>&1 | tee -a ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh.log.txt;" >> ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh;
 ##
 
 # the below ffmepg-splitwav.sh couldnot perform correctly in v1.x version, so it might be removed in higher versions.
