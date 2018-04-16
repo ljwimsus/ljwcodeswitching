@@ -55,15 +55,15 @@ tempfolder="cut"; echo "tempfolder $tempfolder"; # used from v2.0
  #tempfolder="temp"; # to be used in higher versions
 ####### rm ./${tempfolder}; # delete old to create new 
 ####### the above line is an extremely dangerous operation!!! when ${cutfolder} misteriously become empty, it delete everything in ./ path.
-if [ $tempfolder == "" ]; then
-	 echo "WHAT'S WRONG??? \$tempfolder is EMPTY!!!ARE YOU SERIOUSLY to rm -rf ./ ???"; 
-	exit 1;
-else
+if [ $tempfolder != "" ]; then
 ### rm -rf ./${tempfolder}; # delete old to create new
 ### be careful this usage!!! the safe way is just rm $tempfolder without ./
 ### mkdir ./${tempfolder}; 
 rmtrash ${tempfolder};
 mkdir ${tempfolder};
+else
+	echo "WHAT'S WRONG??? \$tempfolder is EMPTY!!!ARE YOU SERIOUSLY to rm -rf ./ ???"; 
+	exit 1;
 fi
 # ./temp will be used in version higher than v3.0
 
@@ -72,10 +72,7 @@ fi
 cutfolder="cut"; echo "cutefolder $cutfolder";
 ####### rm ./${cutfolder}; # delete old to create new 
 ####### the above line is an extremely dangerous operation!!! when ${cutfolder} misteriously become empty, it delete everything in ./ path.
-if [ $cutfolder == "" ]; then
-	 echo "WHAT'S WRONG??? \$cutfolder is EMPTY!!! ARE YOU SERIOUSLY to rm -rf ./ ???"; 
-	exit 1;
-else
+if [ $cutfolder != "" ]; then
 ### rm -rf ./${cutfolder}; # delete old to create new
 ### be careful this usage!!! the safe way is just rm $cutfolder without ./ 
 ### mkdir ./${cutfolder};
@@ -85,6 +82,9 @@ rmtrash ${cutfolder};
 #mkdir -p $utterancedir;
 #mkdir ${cutfolder}; echo "makedir `pwd`";
 mkdir -p ./${cutfolder}/${utterancename}; echo "makedir ./${cutfolder} and ./${cutfolder}/${utterancename}";
+else
+	echo "WHAT'S WRONG??? \$cutfolder is EMPTY!!! ARE YOU SERIOUSLY to rm -rf ./ ???"; 
+	exit 1;
 fi
 # ./cut is used from v1.0.x
 
@@ -165,15 +165,15 @@ singlelinetime=${singleline:0:${singlelinetimeplus1}}; echo singlelinetime ${sin
 # on v1.0.2 the following lines will crash when starttime is 0 !!! 
 # an if test is need!!!
  starttime=${singlelinetime%[^0-9]*}; echo starttime ${starttime};
-    if [ ${starttime} == 0 ]; then # adding if test to avoid crashing
-    	#starttimeposition = 0; # Don't put spaces around the = in assignments.
-    	starttimeposition=0;
-    else
+if [ ${starttime} != 0 ]; then # adding if test to avoid crashing
  starttimelength=${#starttime}; echo starttimelength ${starttimelength};
  starttimesec=${starttime:0:${starttimelength}-3}; echo starttimesec ${starttimesec};
  starttimemillisec=${starttime:0-3:3}; echo starttimemillisec ${starttimemillisec};
 starttimeposition=${starttimesec}.${starttimemillisec}; echo starttimeposition ${starttimeposition};
-    fi
+else
+ #starttimeposition = 0; # Don't put spaces around the = in assignments.
+starttimeposition=0;
+fi # in v2.0.5 change from [ ${starttime} == 0 ]; to [ ${starttime} != 0 ]; to avoid == style problem
  endtime=${singlelinetime##*[^0-9]}; echo endtime ${endtime}; 
  endtimelength=${#endtime}; echo endtimelength ${endtimelength};
  endtimesec=${endtime:0:${endtimelength}-3}; echo endtimesec ${endtimesec};
