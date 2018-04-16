@@ -55,12 +55,12 @@ tempfolder="cut"; echo "tempfolder $tempfolder"; # used from v2.0
  #tempfolder="temp"; # to be used in higher versions
 ####### rm ./${tempfolder}; # delete old to create new 
 ####### the above line is an extremely dangerous operation!!! when ${cutfolder} misteriously become empty, it delete everything in ./ path.
-if [ $tempfolder != "" ] && [ -d "${tempfolder}" ]; then
+if [ $tempfolder != "" ]; then echo "\$tempfolder is not empty";
 ### rm -rf ./${tempfolder}; # delete old to create new
 ### be careful this usage!!! the safe way is just rm $tempfolder without ./
 ### mkdir ./${tempfolder}; 
 #rmtrash ${tempfolder}; # do not delete cut from v2.0.8
-mkdir ${tempfolder};
+if [ ! -d "${tempfolder}" ]; then mkdir ${tempfolder}; fi
 else
 	echo "WHAT'S WRONG??? \$tempfolder is EMPTY!!!ARE YOU SERIOUSLY to rm -rf ./ ???"; 
 	exit 1;
@@ -72,16 +72,18 @@ fi
 cutfolder="cut"; echo "cutefolder $cutfolder";
 ####### rm ./${cutfolder}; # delete old to create new 
 ####### the above line is an extremely dangerous operation!!! when ${cutfolder} misteriously become empty, it delete everything in ./ path.
-if [ $cutfolder != "" ] && [ $utterancename != "" ] && [ -d "${cutfolder}" ]; then
+if [ $cutfolder != "" ] && [ $utterancename != "" ]; then echo "both \$cutfolder and \$utterancename is not empty!";
 ### rm -rf ./${cutfolder}; # delete old to create new
 ### be careful this usage!!! the safe way is just rm $cutfolder without ./ 
 ### mkdir ./${cutfolder};
 ### mkdir ./${cutfolder}/${utterancename};
 #rmtrash ${cutfolder}; # do not delete cut from v2.0.8
 #utterancedir=`pwd`/${cutfolder}/${utterancename}/;
+if [ ! -d "${cutfolder}/${utterancename}" ]; then
 #mkdir -p $utterancedir;
 #mkdir ${cutfolder}; echo "makedir `pwd`";
 mkdir -p ./${cutfolder}/${utterancename}; echo "makedir ./${cutfolder} and ./${cutfolder}/${utterancename}";
+fi
 else
 	echo "WHAT'S WRONG??? \$cutfolder is EMPTY!!! ARE YOU SERIOUSLY to rm -rf ./ ???"; 
 	exit 1;
