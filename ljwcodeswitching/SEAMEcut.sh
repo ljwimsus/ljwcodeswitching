@@ -188,16 +188,15 @@ endtimeposition=${endtimesec}.${endtimemillisec}; echo endtimeposition ${endtime
 # echo "ffmpeg -y -i ${currentpath}/${cutfolder}/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/${cutfolder}/${utterancename}/${utterancename}.${linenumbername}.wav; " >> ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh;
 #
 # in v2.0.0 the -ffmpeg-splitwav.sh script is prepared for parallel excute the all the single line ffmpeg operations
-#echo "ffmpeg -y -i ${currentpath}/${tempfolder}/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/${cutfolder}/${utterancename}/${utterancename}.${linenumbername}.wav 2>&1 | tee -a ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh.log.txt;" >> ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh;
-echo "ffmpeg -y -i ${currentpath}/${tempfolder}/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/${cutfolder}/${utterancename}/${utterancename}.${linenumbername}.wav;" >> ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh;
-# bug occure in v2.0.2 in above line since adapt the sed 's/[[:space:]]/\ /g' in readline
+echo "ffmpeg -y -i ${currentpath}/${tempfolder}/${utterancename}.wav -ss ${starttimeposition} -to ${endtimeposition} -c copy ${currentpath}/${cutfolder}/${utterancename}/${utterancename}.${linenumbername}.wav 2>&1 | tee -a ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh.log.txt;" >> ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh;
 ##
 
+# IT IS WRONG TO PUT FOLLOWING ffmpeg-splitwav.sh list for parallel execution WITH THE WHILE LOOP!!!
 # the below ffmepg-splitwav.sh couldnot perform correctly in v1.x version, so it might be removed in higher versions.
 #
 # generating ${currentpath}/${cutfolder}/${utterancename}-ffmpeg-splitwav.sh list for parallel execution
-echo "#$linenumbername"
-echo "sh ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh 2>&1 | tee -a ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh.log.txt" >> ${currentpath}/${tempfolder}/ffmepg-splitwav.sh
+#echo "#$linenumbername"
+#echo "sh ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh 2>&1 | tee -a ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh.log.txt" >> ${currentpath}/${tempfolder}/ffmepg-splitwav.sh
 
 
 
@@ -214,6 +213,13 @@ echo ${singlelinetext} > ${currentpath}/${cutfolder}/${utterancename}/${utteranc
  linenum=`expr ${linenum} + 1`;
 
 done;
+
+parallelnumber=2;
+# Add ${utterancename}-ffmpeg-splitwav.sh to ffmepg-splitwav.sh list for serial or parallel execution
+echo "cat ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh | parallel -j $parallelnumber 2>&1 | tee -a ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav-parallel.sh.log.txt" >> ${currentpath}/${tempfolder}/ffmepg-splitwav-parallel.sh
+# Add ${utterancename}-ffmpeg-splitwav.sh to ffmepg-splitwav.sh list for serial execution
+echo "sh ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh 2>&1 | tee -a ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav-serial.sh.log.txt" >> ${currentpath}/${tempfolder}/ffmepg-splitwav-serial.sh
+
 
  # from v1.1.1 remove the following ffmpeg-splitwav.sh execution within the script and suggest to run it by an external script calling
  # excute the -ffmpeg-splitwav.sh to devide the single line wav to /${cutfolder}/ folder
