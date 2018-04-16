@@ -131,9 +131,9 @@ echo "ffmpeg -y -i ${audiopath}/${utterancename}.flac ${currentpath}/${tempfolde
 
 # while loop for singleline transcription's speration
 # in v2.0.0 use sed to remove tab to solve the starttime recognizing problem
-  #cat ${transcriptpath}/${transcriptname}.txt | while read line ; do echo; echo line#${linenum} ${line};
-  sed 's/[[:space:]]/\ /g' ${transcriptpath}/${transcriptname}.txt | while read line ; do echo; echo line#${linenum} ${line};
-  # bug occure in v2.0.2 in ffmpeg-splitwav.sh since adapt the sed 's/[[:space:]]/\ /g' in read line, back to use cat
+  cat ${transcriptpath}/${transcriptname}.txt | while read line ; do echo; echo line#${linenum} ${line};
+  #sed 's/[[:space:]]/\ /g' ${transcriptpath}/${transcriptname}.txt | while read line ; do echo; echo line#${linenum} ${line};
+  # bug occure in v2.0.2 in ffmpeg-splitwav.sh since adapt the sed 's/[[:space:]]/\ /g' in read line, back to use cat in v2.0.6
 
 # for better sorting file list, need to add zeros to the beginning of the line number for file naming
   #linenum=`expr ${linenum} + 1`;
@@ -165,20 +165,47 @@ singlelinetime=${singleline:0:${singlelinetimeplus1}}; echo singlelinetime ${sin
 # on v1.0.2 the following lines will crash when starttime is 0 !!! 
 # an if test is need!!!
  starttime=${singlelinetime%[^0-9]*}; echo starttime ${starttime};
-if [ ${starttime} != 0 ]; then # adding if test to avoid crashing
- starttimelength=${#starttime}; echo starttimelength ${starttimelength};
+#if [ ${starttime} != 0 ]; then # adding if test to avoid crashing
+if [[ $starttime != 0 ]] ; then # double [[ ]] will ignore the spaces in $starttime
+ #starttimelength=${#starttime}; echo starttimelength ${starttimelength};
+ #starttimesec=${starttime:0:${starttimelength}-3}; echo starttimesec ${starttimesec};
+ #starttimemillisec=${starttime:0-3:3}; echo starttimemillisec ${starttimemillisec};
+ 
+#starttimenospace=`echo $starttime | sed 's/[[:space:]]//g'`; echo "\$starttimenospace $starttimenospace";
+starttimenospace=`echo $starttime | sed 's/[^0-9]//g'`; echo "\$starttimenospace $starttimenospace"; #GOOOOOOOD!!!FINALLLY KICK OFF THE SPACES IN THE DIGITS!!!
+
+ if [ $starttimenospace != 0 ]; then echo "\$starttimenospace without spaces!"; fi
+ starttimetest=`expr ${starttimenospace} / 1000`; echo "\$starttimetest $starttimetest is a digital number without space.";
+ starttimetest=`echo "sclae=2; $starttimenospace / 1000" | bc`; echo "\$starttimetest $starttimetest is a digital number without space.";
+ starttimetest=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`; echo "\$starttimetest $starttimetest is a digital number without space.";
+ 
+ starttimelength=${#starttimenospace}; echo starttimelength ${starttimelength};
  starttimesec=${starttime:0:${starttimelength}-3}; echo starttimesec ${starttimesec};
  starttimemillisec=${starttime:0-3:3}; echo starttimemillisec ${starttimemillisec};
-starttimeposition=${starttimesec}.${starttimemillisec}; echo starttimeposition ${starttimeposition};
+#starttimeposition=${starttimesec}.${starttimemillisec}; echo starttimeposition ${starttimeposition};
+starttimeposition=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`;echo starttimeposition ${starttimeposition};
+#in v2.0.6 use awk to get the starttimeposition
 else
  #starttimeposition = 0; # Don't put spaces around the = in assignments.
 starttimeposition=0;
 fi # in v2.0.5 change from [ ${starttime} == 0 ]; to [ ${starttime} != 0 ]; to avoid == style problem
  endtime=${singlelinetime##*[^0-9]}; echo endtime ${endtime}; 
- endtimelength=${#endtime}; echo endtimelength ${endtimelength};
+
+#endtimenospace=`echo $endtime | sed 's/[[:space:]]//g'`; echo "\$endtimenospace $endtimenospace";
+endtimenospace=`echo $endtime | sed 's/[^0-9]//g'`; echo "\$endtimenospace $endtimenospace"; #GOOOOOOOD!!!FINALLLY KICK OFF THE SPACES IN THE DIGITS!!!
+
+ if [ $endtimenospace != 0 ]; then echo "\$endtimenospace without spaces!"; fi
+ endtimetest=`expr ${endtimenospace} / 1000`; echo "\$endtimetest $endtimetest is a digital number without space.";
+ endtimetest=`echo "sclae=2; $endtimenospace / 1000" | bc`; echo "\$endtimetest $endtimetest is a digital number without space.";
+ endtimetest=`awk 'BEGIN{printf "%.3f\n",('$endtimenospace'/1000)}'`; echo "\$endtimetest $endtimetest is a digital number without space.";
+ 
+ endtimelength=${#endtimenospace}; echo endtimelength ${endtimelength};
  endtimesec=${endtime:0:${endtimelength}-3}; echo endtimesec ${endtimesec};
  endtimemillisec=${endtime:0-3:3}; echo endtimemillisec ${endtimemillisec};
-endtimeposition=${endtimesec}.${endtimemillisec}; echo endtimeposition ${endtimeposition};
+
+#endtimeposition=${endtimesec}.${endtimemillisec}; echo endtimeposition ${endtimeposition};
+endtimeposition=`awk 'BEGIN{printf "%.3f\n",('$endtimenospace'/1000)}'`; echo endtimeposition ${endtimeposition};
+#in v2.0.6 use awk to get the endtimeposition
 
 # output the ffmpeg commands to a -ffmpeg-splitwav.sh script 
 #
