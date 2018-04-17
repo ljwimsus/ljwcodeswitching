@@ -182,7 +182,8 @@ if [[ $starttimenospace != 0 ]]; then
  starttimetest=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`; echo "\$starttimetest $starttimetest is a digital number without space.";
 starttimeposition=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`;echo starttimeposition ${starttimeposition};
 #in v2.0.6 use awk to get the starttimeposition
-    
+
+# from v2.0.9 no longer use the following string     
  #starttimelength=${#starttimenospace}; echo starttimelength ${starttimelength};
  #starttimesec=${starttime:0:${starttimelength}-3}; echo starttimesec ${starttimesec};
  #starttimemillisec=${starttime:0-3:3}; echo starttimemillisec ${starttimemillisec};
@@ -278,6 +279,8 @@ echo "sh ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh 2>&1 |
  unset -v transcriptname;
  unset -v utterancename;
  unset -v audiopath;
+ unset -v tempfolder;
+ unset -v cutfolder;
  unset -v linenum;
  unset -v linenumber;
  unset -v linenumbername;
@@ -289,12 +292,17 @@ echo "sh ${currentpath}/${tempfolder}/${utterancename}-ffmpeg-splitwav.sh 2>&1 |
  unset -v singlelinetimeminus1;
  unset -v singlelinetimeplus1;
  unset -v starttime;
- unset -v starttimelength;
- unset -v starttimesec;
- unset -v starttimemillisec;
+ unset -v starttimenospace;
+ unset -v starttimetest;
+ #unset -v starttimelength;
+ #unset -v starttimesec;
+ #unset -v starttimemillisec;
  unset -v starttimeposition;
  unset -v endtime;
- unset -v endtimelength;
- unset -v endtimesec;
- unset -v endtimemillisec;
+ unset -v endtimenospace;
+ unset -v endtimetest;
+ #unset -v endtimelength;
+ #unset -v endtimesec;
+ #unset -v endtimemillisec;
  unset -v endtimeposition;
+ unset -v parallenumber;
