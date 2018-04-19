@@ -41,11 +41,14 @@ echo "";
 
  # initial linenum is 1
  linenum=1;
+ loopnum=1;
 
 echo "while read line loop begins"; echo ""; echo "";
 # while loop for singleline transcription's speration
   cat ${transcriptpath}/${utterancename}.txt | while read line ; do echo "while read line loop enters"; echo ""; 
-  	
+
+if [[ $line != "" ]]; then
+   	echo "line is not empty, continue to process:"; echo "";	
   	echo line#${linenum} ${line};
 
 # for better sorting file list, need to add zeros to the beginning of the line number for file naming
@@ -77,16 +80,16 @@ echoignoretabspaceinhead=`echo$singleline`;
 echo$echoignoretabspaceinhead;
 echo "$echoignoretabspaceinhead";
 
-echo 					this works!!!
+echo 					this works!!!;
 
 
 echo$singleline works!!!!
 echo$singleline; echo "THIS WORKS!!!!!!!!!!!!!"
-echo "$singleline;"
 echo "$singleline;";
-echo "$singleline"
+echo "$singleline;";
 echo "$singleline";
-echo"$singleline"
+echo "$singleline";
+echo"$singleline";
 echo"$singleline";
 
 echo "awk \$singleline"; 
@@ -109,12 +112,12 @@ echo $singlelinewithouttabspace >> ./test.txt;
  echo ""; echo "this line before the ending of singleline tests should be by passed";
 #####
  echo ""; echo "this line after the ending of singleline tests should be displayed"; 
- echo ""
+ echo "";
 
 
 
 # delete the speakerID at the beginning of a transcript line
-echo "delete the speakerID at the beginning of a transcript line:"
+echo "delete the speakerID at the beginning of a transcript line:";
 #echo ${line/${utterancename}/}
 #echo${line/${utterancename}/}
 #echo "${line/${utterancename}/}"
@@ -125,7 +128,17 @@ echo "delete the speakerID at the beginning of a transcript line:"
 #echo "${line/${utterancename}/}";
 #echo"${line/${utterancename}/}";
 echo "";
-singleline=`echo${line/${utterancename}/}`; 
+#singleline=`echo${line/${utterancename}/}`;
+#`echo${line/${utterancename}/}`;
+ #if [ $? != 0 ]; then echo $?; fi 
+if [[ ! `echo${line/${utterancename}/}` ]]; then 
+	echo "Something WRONG!!! The script will exit 1!!! ";
+	echo "The $utterancename didn't exist in this line!!!";
+	echo "Please check the corpus in transcript $transcriptpath/$utterancename of line $linenum"; 
+	exit 1;
+else
+ singleline=`echo${line/${utterancename}/}`;
+fi
 #echo singleline; 
 #echo "${singleline}"; 
 #echo"${singleline}";
@@ -201,9 +214,9 @@ fi # in v2.0.5 change from [ ${starttime} == 0 ]; to [ ${starttime} != 0 ]; to a
 endtimenospace=`echo $endtime | sed 's/[^0-9]//g'`; echo "\$endtimenospace $endtimenospace"; #GOOOOOOOD!!!FINALLLY KICK OFF THE SPACES IN THE DIGITS!!!
 
  if [ $endtimenospace != 0 ]; then echo "\$endtimenospace without spaces!"; fi
- endtimetest=`expr ${endtimenospace} / 1000`; echo "\$endtimetest $endtimetest is a digital number without space.";
- endtimetest=`echo "sclae=2; $endtimenospace / 1000" | bc`; echo "\$endtimetest $endtimetest is a digital number without space.";
- endtimetest=`awk 'BEGIN{printf "%.3f\n",('$endtimenospace'/1000)}'`; echo "\$endtimetest $endtimetest is a digital number without space.";
+ endtimetest1=`expr ${endtimenospace} / 1000`; echo "\$endtimetest1 $endtimetest1 is a digital number without space.";
+ endtimetest2=`echo "sclae=2; $endtimenospace / 1000" | bc`; echo "\$endtimetest2 $endtimetest2 is a digital number without space.";
+ endtimetest3=`awk 'BEGIN{printf "%.3f\n",('$endtimenospace'/1000)}'`; echo "\$endtimetest3 $endtimetest3 is a digital number without space.";
 endtimeposition=`awk 'BEGIN{printf "%.3f\n",('$endtimenospace'/1000)}'`; echo endtimeposition ${endtimeposition};
 #in v2.0.6 use awk to get the endtimeposition
   
@@ -235,13 +248,24 @@ endtimeposition=`awk 'BEGIN{printf "%.3f\n",('$endtimenospace'/1000)}'`; echo en
 
 echo "";
  # increasing the linenum for next loop
- linenum=`expr ${linenum} + 1`; echo linenum+1
+ linenum=`expr ${linenum} + 1`; echo linenum+1; echo linenum $linenum;
+
+else
+	echo "this is an empty line, linenum would not increase."; echo "";
+fi
 
 echo ""; echo "while read line loop enter next loop"; echo "";
-	
-done; 
+
+loopnum=`expr $loopnum + 1`; echo loopnum $loopnum;
+
+if [[ $loopnum != $linenum ]]; then echo "caution!!! \$loopnum not equal to \$linenum" !!! ; fi
+
+done; # <<< "$(cat ${transcriptpath}/${utterancename}.txt)"; 
 
 echo ""; echo "while read line loop finished"; echo "";
+
+countline=`cat $transcriptpath/$utterancename.txt | wc -l`; echo countline $countline;
+#if [[ $countline != $linenum ]]; then echo "wc -l not equal to linenum"; fi
 
 
 
