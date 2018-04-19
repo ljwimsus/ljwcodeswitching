@@ -45,7 +45,8 @@ echo "";
 
 echo "while read line loop begins"; echo ""; echo "";
 # while loop for singleline transcription's speration
-  cat ${transcriptpath}/${utterancename}.txt | while read line ; do echo "while read line loop enters"; echo ""; 
+  head -n 1 ${transcriptpath}/${utterancename}.txt | while read line ; do echo "while read line loop enters"; echo ""; echo "+++++++++";
+#  cat ${transcriptpath}/${utterancename}.txt | while read line ; do echo "while read line loop enters"; echo ""; echo "+++++++++"; 
 
 if [[ $line != "" ]]; then
    	echo "line is not empty, continue to process:"; echo "";	
@@ -157,7 +158,7 @@ echo "";
 #
 #the above line is wrong, it deletes all the digits within the line, includeing those in the transcript text
 #
-singlelinetext=`echo $singleline|sed 's/^[ \t0-9]*//g'`; echo "singlelinetext $singlelinetext";
+singlelinetext=`echo $singleline|sed 's/^[ 0-9]*//g'`; echo "singlelinetext $singlelinetext";
 
 #echo singleline $singleline; echo "";
 #echo singlelinelenghth ${#singleline}; echo "";
@@ -180,7 +181,7 @@ singlelinetime=${singleline/${singlelinetext}/}; echo "singlelinetime ${singleli
 # catching each transcript line's beginning and ending position in millisecond format
 # on v1.0.2 the following lines will crash when starttime is 0 !!! 
 # an if test is need!!!
- starttime=${singlelinetime%[^0-9]*\ }; echo starttime ${starttime};
+ starttime=${singlelinetime%%[^0-9]*}; echo starttime ${starttime};
 #if [ ${starttime} != "0" ]; then # adding if test to avoid crashing
 #if [[ $starttime != "0" ]] ; then # double [[ ]] will ignore the spaces in $starttime
  #starttimelength=${#starttime}; echo starttimelength ${starttimelength};
@@ -189,6 +190,10 @@ singlelinetime=${singleline/${singlelinetext}/}; echo "singlelinetime ${singleli
  
 #starttimenospace=`echo $starttime | sed 's/[[:space:]]//g'`; echo "\$starttimenospace $starttimenospace";
 starttimenospace=`echo $starttime|sed 's/[^0-9]//g'`; echo "\$starttimenospace $starttimenospace"; #GOOOOOOOD!!!FINALLLY KICK OFF THE SPACES IN THE DIGITS!!!
+echo ""; echo starttimenospacelength ${#starttimenospace};
+if [[ ${#starttimenospace} < 4 ]]; then echo "starttimenospace is less than a second"; fi
+echo "";
+
 if [[ $starttimenospace != 0 ]]; then
  #if [ $starttimenospace != 0 ]; then echo "\$starttimenospace without spaces!"; fi
  starttimetest1=`expr ${starttimenospace} / 1000`; echo "\$starttimetest1 $starttimetest1 is a digital number without space.";
@@ -212,6 +217,9 @@ fi # in v2.0.5 change from [ ${starttime} == 0 ]; to [ ${starttime} != 0 ]; to a
 
 #endtimenospace=`echo $endtime | sed 's/[[:space:]]//g'`; echo "\$endtimenospace $endtimenospace";
 endtimenospace=`echo $endtime | sed 's/[^0-9]//g'`; echo "\$endtimenospace $endtimenospace"; #GOOOOOOOD!!!FINALLLY KICK OFF THE SPACES IN THE DIGITS!!!
+echo ""; echo endtimenospacelength ${#endtimenospace};
+if [[ ${#endtimenospace} < 4 ]]; then echo "endtimenospace is less than a second"; fi
+echo "";
 
  if [ $endtimenospace != 0 ]; then echo "\$endtimenospace without spaces!"; fi
  endtimetest1=`expr ${endtimenospace} / 1000`; echo "\$endtimetest1 $endtimetest1 is a digital number without space.";
@@ -262,7 +270,7 @@ if [[ $loopnum != $linenum ]]; then echo "caution!!! \$loopnum not equal to \$li
 
 done; # <<< "$(cat ${transcriptpath}/${utterancename}.txt)"; 
 
-echo ""; echo "while read line loop finished"; echo "";
+echo ""; echo "while read line loop finished"; echo ""; echo "=========";
 
 countline=`cat $transcriptpath/$utterancename.txt | wc -l`; echo countline $countline;
 #if [[ $countline != $linenum ]]; then echo "wc -l not equal to linenum"; fi
