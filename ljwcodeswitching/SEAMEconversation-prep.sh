@@ -45,8 +45,8 @@ echo "";
 
 echo "while read line loop begins"; echo ""; echo "";
 # while loop for singleline transcription's speration
-  head -n 1 ${transcriptpath}/${utterancename}.txt | while read line ; do echo "while read line loop enters"; echo ""; echo "+++++++++";
-#  cat ${transcriptpath}/${utterancename}.txt | while read line ; do echo "while read line loop enters"; echo ""; echo "+++++++++"; 
+#  head -n 1 ${transcriptpath}/${utterancename}.txt | while read line ; do echo "while read line loop enters"; echo ""; echo "+++++++++";
+  cat ${transcriptpath}/${utterancename}.txt | while read line ; do echo "while read line loop enters"; echo ""; echo "+++++++++"; 
 
 if [[ $line != "" ]]; then
    	echo "line is not empty, continue to process:"; echo "";	
@@ -194,7 +194,7 @@ echo ""; echo starttimenospacelength ${#starttimenospace};
 if [[ ${#starttimenospace} < 4 ]]; then echo "starttimenospace is less than a second"; fi
 echo "";
 
-if [[ $starttimenospace != 0 ]]; then
+if [[ $starttimenospace != 0 ]]; then echo "\$starttimenospace without spaces!";
  #if [ $starttimenospace != 0 ]; then echo "\$starttimenospace without spaces!"; fi
  starttimetest1=`expr ${starttimenospace} / 1000`; echo "\$starttimetest1 $starttimetest1 is a digital number without space.";
  starttimetest2=`echo "sclae=2; $starttimenospace / 1000" | bc`; echo "\$starttimetest2 $starttimetest2 is a digital number without space.";
@@ -212,6 +212,8 @@ else
  #starttimeposition = 0; # Don't put spaces around the = in assignments.
 starttimeposition=0; echo starttimeposition=0;
 fi # in v2.0.5 change from [ ${starttime} == 0 ]; to [ ${starttime} != 0 ]; to avoid == style problem
+
+echo "";
 
  endtime=${singlelinetime#*[^0-9]}; echo endtime ${endtime}; 
 
