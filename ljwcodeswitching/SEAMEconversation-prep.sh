@@ -27,19 +27,13 @@ echo ""
 
 
 # utterance name, audio and transcript locations
-audiopath=`echo ${1} | sed 's/\.txt//g' | sed 's/\.flac//g' | sed 's/\.wav//g' | sed 's/\/$//g'`; echo audiopath $audiopath; #absolute path to transcript folder
-utterancename=`echo ${2} | sed 's/\.txt//g' | sed 's/\.flac//g' | sed 's/\.wav//g'`; echo utterancename $utterancename; #transcript filename
-transcriptpath=`echo ${3} | sed 's/\.txt//g' | sed 's/\.flac//g' | sed 's/\.wav//g' | sed 's/\/$//g'`; echo transcriptpath $transcriptpath; #absolute path to transcript folder
+audiopath=`echo ${1}|sed 's/\.txt//g'|sed 's/\.flac//g'|sed 's/\.wav//g'|sed 's/\/$//g'`; echo audiopath $audiopath; #absolute path to transcript folder
+utterancename=`echo ${2}|sed 's/\.txt//g'|sed 's/\.flac//g'|sed 's/\.wav//g'`; echo utterancename $utterancename; #transcript filename
+transcriptpath=`echo ${3}|sed 's/\.txt//g'|sed 's/\.flac//g'|sed 's/\.wav//g'|sed 's/\/$//g'`; echo transcriptpath $transcriptpath; #absolute path to transcript folder
 
 echo "";
 echo "ffmpeg processing for ${utterancename} begins!"; 
 echo "";
-
-# echo "";
-# echo ""; echo "the script should by pass the rest of the body"; echo "";
-#:<<\#########
-# echo ""; echo "this line within the body should be by passed"; echo "";
-# echo "";
 
 # prepare the temporary flac2wav.sh to convert the flac to wav
 
@@ -100,14 +94,14 @@ echo $singleline | awk '{printf("%s", $0)}'; echo "";
 echo $singleline | sed 's/^[ \t]//g';
 echo $singleline | sed 's/^[ ]//g';
 echo$singleline | sed 's/^[	]+//g';
-singlelinewithouttabspace=`echo $singleline | sed 's/^[ \t]+//g'`;
+singlelinewithouttabspace=`echo $singleline|sed 's/^[ \t]+//g'`;
 echo \$singlelinewithouttabspace; 
 echo $singlelinewithouttabspace; 
 
 singleline=${line/${utterancename}/}; echo ${singleline} > ./test.txt;
-echo "awk \$singleline"; echo $singleline | awk '{printf("%s", $0)}' >> ./test.txt; 
+echo "awk \$singleline"; echo $singleline|awk '{printf("%s", $0)}' >> ./test.txt; 
 echo $singleline | sed 's/^[ \t]//g' >> ./test.txt;
-singlelinewithouttabspace=`echo $singleline | sed 's/^[ \t]+//g'`; 
+singlelinewithouttabspace=`echo $singleline|sed 's/^[ \t]+//g'`; 
 echo $singlelinewithouttabspace >> ./test.txt; 
 
 
@@ -152,32 +146,28 @@ echo "";
 #
 singlelinetext=`echo $singleline|sed 's/^[ \t0-9]*//g'`; echo "singlelinetext $singlelinetext";
 
-echo singleline $singleline; echo "";
-echo singlelinelenghth ${#singleline}; echo "";
-echo singlelinetextlenghth ${#singlelinetext}; echo "";
-echo "singlelinelenghth - singlelinetextlenghth"; echo `expr ${#singleline} - ${#singlelinetext}`; echo ""
-singlelinetimetest1=${singleline/${singlelinetext}/}; echo "singlelinetimetest1 ${singlelinetimetest1}"; echo "";
-singlelinetimetest2=${singleline:0:`expr ${#singleline} - ${#singlelinetext}`}; echo singlelinetimetest2 ${singlelinetimetest2}; echo "";
-singlelinetimetest3=${singleline:4:`expr ${#singleline}-${#singlelinetext}+1`}; echo singlelinetimetest3 ${singlelinetimetest3}; echo "";
-singlelinetimetest4=${singleline:4:2}; echo singlelinetimetest4 ${singlelinetimetest4}; echo "";
+#echo singleline $singleline; echo "";
+#echo singlelinelenghth ${#singleline}; echo "";
+#echo singlelinetextlenghth ${#singlelinetext}; echo "";
+#echo "singlelinelenghth - singlelinetextlenghth"; echo `expr ${#singleline} - ${#singlelinetext}`; echo ""
+#singlelinetimetest1=${singleline/${singlelinetext}/}; echo "singlelinetimetest1 ${singlelinetimetest1}"; echo "";
+#singlelinetimetest2=${singleline:0:`expr ${#singleline} - ${#singlelinetext}`}; echo singlelinetimetest2 ${singlelinetimetest2}; echo "";
+#singlelinetimetest3=${singleline:4:`expr ${#singleline}-${#singlelinetext}+1`}; echo singlelinetimetest3 ${singlelinetimetest3}; echo "";
+#singlelinetimetest4=${singleline:4:2}; echo singlelinetimetest4 ${singlelinetimetest4}; echo "";
 
 
  # try to catch each transcript line's timestamps
- singlelinetimecut1=${singleline%[0-9]*}; echo singlelinetimecut1 ${singlelinetimecut1};
- singlelinetimeminus1=${#singlelinetimecut1}; echo singlelinetimeminus1 ${singlelinetimeminus1};
- singlelinetimeplus1=`expr ${singlelinetimeminus1} + 1`; echo singlelinetimeplus1 ${singlelinetimeplus1};
-singlelinetime=${singleline:0:${singlelinetimeplus1}}; echo singlelinetime ${singlelinetime};
-
-# echo "";
-# echo ""; echo "the script should by pass the rest of the while loop";
-#:<<\########
-# echo ""; echo "this line within the while loop should be by passed";
-# echo "";
+ #singlelinetimecut1=${singleline%[0-9]*}; echo singlelinetimecut1 ${singlelinetimecut1};
+ #singlelinetimeminus1=${#singlelinetimecut1}; echo singlelinetimeminus1 ${singlelinetimeminus1};
+ #singlelinetimeplus1=`expr ${singlelinetimeminus1} + 1`; echo singlelinetimeplus1 ${singlelinetimeplus1};
+#singlelinetime=${singleline:0:${singlelinetimeplus1}}; echo singlelinetime ${singlelinetime};
+#the above methods is no longer used from v1.0.0
+singlelinetime=${singleline/${singlelinetext}/}; echo "singlelinetime ${singlelinetime}"; echo "";
 
 # catching each transcript line's beginning and ending position in millisecond format
 # on v1.0.2 the following lines will crash when starttime is 0 !!! 
 # an if test is need!!!
- starttime=${singlelinetime%[^0-9]*}; echo starttime ${starttime};
+ starttime=${singlelinetime%[^0-9]*\ }; echo starttime ${starttime};
 #if [ ${starttime} != "0" ]; then # adding if test to avoid crashing
 #if [[ $starttime != "0" ]] ; then # double [[ ]] will ignore the spaces in $starttime
  #starttimelength=${#starttime}; echo starttimelength ${starttimelength};
@@ -185,12 +175,12 @@ singlelinetime=${singleline:0:${singlelinetimeplus1}}; echo singlelinetime ${sin
  #starttimemillisec=${starttime:0-3:3}; echo starttimemillisec ${starttimemillisec};
  
 #starttimenospace=`echo $starttime | sed 's/[[:space:]]//g'`; echo "\$starttimenospace $starttimenospace";
-starttimenospace=`echo $starttime | sed 's/[^0-9]//g'`; echo "\$starttimenospace $starttimenospace"; #GOOOOOOOD!!!FINALLLY KICK OFF THE SPACES IN THE DIGITS!!!
+starttimenospace=`echo $starttime|sed 's/[^0-9]//g'`; echo "\$starttimenospace $starttimenospace"; #GOOOOOOOD!!!FINALLLY KICK OFF THE SPACES IN THE DIGITS!!!
 if [[ $starttimenospace != 0 ]]; then
  #if [ $starttimenospace != 0 ]; then echo "\$starttimenospace without spaces!"; fi
- starttimetest=`expr ${starttimenospace} / 1000`; echo "\$starttimetest $starttimetest is a digital number without space.";
- starttimetest=`echo "sclae=2; $starttimenospace / 1000" | bc`; echo "\$starttimetest $starttimetest is a digital number without space.";
- starttimetest=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`; echo "\$starttimetest $starttimetest is a digital number without space.";
+ starttimetest1=`expr ${starttimenospace} / 1000`; echo "\$starttimetest1 $starttimetest1 is a digital number without space.";
+ starttimetest2=`echo "sclae=2; $starttimenospace / 1000" | bc`; echo "\$starttimetest2 $starttimetest2 is a digital number without space.";
+ starttimetest3=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`; echo "\$starttimetest3 $starttimetest3 is a digital number without space.";
 starttimeposition=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`;echo starttimeposition ${starttimeposition};
 #in v2.0.6 use awk to get the starttimeposition
 
@@ -202,10 +192,10 @@ starttimeposition=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`;echo
 
 else
  #starttimeposition = 0; # Don't put spaces around the = in assignments.
-starttimeposition=0;
+starttimeposition=0; echo starttimeposition=0;
 fi # in v2.0.5 change from [ ${starttime} == 0 ]; to [ ${starttime} != 0 ]; to avoid == style problem
 
- endtime=${singlelinetime##*[^0-9]}; echo endtime ${endtime}; 
+ endtime=${singlelinetime#*[^0-9]}; echo endtime ${endtime}; 
 
 #endtimenospace=`echo $endtime | sed 's/[[:space:]]//g'`; echo "\$endtimenospace $endtimenospace";
 endtimenospace=`echo $endtime | sed 's/[^0-9]//g'`; echo "\$endtimenospace $endtimenospace"; #GOOOOOOOD!!!FINALLLY KICK OFF THE SPACES IN THE DIGITS!!!
@@ -276,8 +266,3 @@ parallelnumber=2;
  echo "ffmpeg processing for ${utterancename} ends!";
  echo ""
  
-# echo "";
-# echo ""; echo "this line within the body should be by passed";
-#########
-# echo ""; echo "this line after the body should be displayed"; 
-# echo ""
