@@ -1,0 +1,10 @@
+20180419
+
+sh seame-conversation-prep.sh /Volumes/Data/thesis/seame_conversation_prep/ NI01FAX_0101 /Volumes/Data/thesis/seame_conversation_prep/
+
+ls ../SEAME/data/conversation/transcript/ | while read line; do echo ""; echo $line; echo "++++++++++++"; head -n 1 ../SEAME/data/conversation/transcript/$line; echo "================"; done
+
+ls ../SEAME/data/conversation/transcript/ | while read line; do echo ""; echo $line; echo "++++++++++++"; tail -n 1 ../SEAME/data/conversation/transcript/$line; echo "================"; done
+
+
+ls ../SEAME/data/conversation/transcript/ | while read line; do echo ""; echo $line; echo "++++++++++++"; sh seame-conversation-prep.sh ../SEAME/data/conversation/audio/ $line ../SEAME/data/conversation/transcript/ ; echo "================"; done

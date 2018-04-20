@@ -194,11 +194,16 @@ echo ""; echo starttimenospacelength ${#starttimenospace};
 if [[ ${#starttimenospace} < 4 ]]; then echo "starttimenospace is less than a second"; fi
 echo "";
 
+# for better sorting file list, need to add zeros to the beginning of the starttimenospace for file naming
+  #starttimenospace=`expr ${starttimenospace} + 1`;
+  starttimename="0000000${starttimenospace}"; 
+  starttimename=${starttimename:((${#starttimename} - 7))}; echo starttimename $starttimename; echo "";
+
 if [[ $starttimenospace != 0 ]]; then echo "\$starttimenospace without spaces!";
  #if [ $starttimenospace != 0 ]; then echo "\$starttimenospace without spaces!"; fi
- starttimetest1=`expr ${starttimenospace} / 1000`; echo "\$starttimetest1 $starttimetest1 is a digital number without space.";
- starttimetest2=`echo "sclae=2; $starttimenospace / 1000" | bc`; echo "\$starttimetest2 $starttimetest2 is a digital number without space.";
- starttimetest3=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`; echo "\$starttimetest3 $starttimetest3 is a digital number without space.";
+ #starttimetest1=`expr ${starttimenospace} / 1000`; echo "\$starttimetest1 $starttimetest1 is a digital number without space.";
+ #starttimetest2=`echo "sclae=2; $starttimenospace / 1000" | bc`; echo "\$starttimetest2 $starttimetest2 is a digital number without space.";
+ #starttimetest3=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`; echo "\$starttimetest3 $starttimetest3 is a digital number without space.";
 starttimeposition=`awk 'BEGIN{printf "%.3f\n",('$starttimenospace'/1000)}'`;echo starttimeposition ${starttimeposition};
 #in v2.0.6 use awk to get the starttimeposition
 
@@ -223,10 +228,15 @@ echo ""; echo endtimenospacelength ${#endtimenospace};
 if [[ ${#endtimenospace} < 4 ]]; then echo "endtimenospace is less than a second"; fi
 echo "";
 
+# for better sorting file list, need to add zeros to the beginning of the endtimenospace for file naming
+  #endtimenospace=`expr ${endtimenospace} + 1`;
+  endtimename="0000000${endtimenospace}"; 
+  endtimename=${endtimename:((${#endtimename} - 7))}; echo endtimename $endtimename; echo "";
+  
  if [ $endtimenospace != 0 ]; then echo "\$endtimenospace without spaces!"; fi
- endtimetest1=`expr ${endtimenospace} / 1000`; echo "\$endtimetest1 $endtimetest1 is a digital number without space.";
- endtimetest2=`echo "sclae=2; $endtimenospace / 1000" | bc`; echo "\$endtimetest2 $endtimetest2 is a digital number without space.";
- endtimetest3=`awk 'BEGIN{printf "%.3f\n",('$endtimenospace'/1000)}'`; echo "\$endtimetest3 $endtimetest3 is a digital number without space.";
+ #endtimetest1=`expr ${endtimenospace} / 1000`; echo "\$endtimetest1 $endtimetest1 is a digital number without space.";
+ #endtimetest2=`echo "sclae=2; $endtimenospace / 1000" | bc`; echo "\$endtimetest2 $endtimetest2 is a digital number without space.";
+ #endtimetest3=`awk 'BEGIN{printf "%.3f\n",('$endtimenospace'/1000)}'`; echo "\$endtimetest3 $endtimetest3 is a digital number without space.";
 endtimeposition=`awk 'BEGIN{printf "%.3f\n",('$endtimenospace'/1000)}'`; echo endtimeposition ${endtimeposition};
 #in v2.0.6 use awk to get the endtimeposition
   
@@ -256,6 +266,17 @@ endtimeposition=`awk 'BEGIN{printf "%.3f\n",('$endtimenospace'/1000)}'`; echo en
 # echo ""; echo "this line after the while loop should be displayed";
 # echo "";
 
+# OUTPUT files within while loop begins
+
+echo "$utterancename-$starttimename-$endtimename $singlelinetext" >> text;
+#echo "$utterancename ffmpeg -loglevel -8 -i $audiopath/$utterancename.flac -f wav - |" >> wav.scp;
+echo "$utterancename-$starttimename-$endtimename $utterancename $starttimeposition $endtimeposition" >> segments;
+
+
+#OUTPUT files within while loop ends
+
+
+
 echo "";
  # increasing the linenum for next loop
  linenum=`expr ${linenum} + 1`; echo linenum+1; echo linenum $linenum;
@@ -272,12 +293,19 @@ if [[ $loopnum != $linenum ]]; then echo "caution!!! \$loopnum not equal to \$li
 
 done; # <<< "$(cat ${transcriptpath}/${utterancename}.txt)"; 
 
+
+#OUTPUT files outside the while loop begins
+
+echo "$utterancename ffmpeg -loglevel -8 -i $audiopath/$utterancename.flac -f wav - |" >> wav.scp;
+#echo "$utterancename-$starttimename-$endtimename $utterancename $starttimeposition $endtimeposition" >> segments2;
+
+#OUTPUT files outside the while loop ends
+
+
 echo ""; echo "while read line loop finished"; echo ""; echo "=========";
 
 countline=`cat $transcriptpath/$utterancename.txt | wc -l`; echo countline $countline;
 #if [[ $countline != $linenum ]]; then echo "wc -l not equal to linenum"; fi
-
-
 
 parallelnumber=2;
 # Add ${utterancename}-ffmpeg-splitwav.sh to ffmepg-splitwav.sh list for serial or parallel execution
